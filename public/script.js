@@ -100,6 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
             yoyo: true
         });
     });
+
+    setupCarousel();
 });
 
 function createHoneyDrips() {
@@ -219,4 +221,100 @@ function createHoneyDrips() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
     });
-} 
+}
+
+function setupCarousel() {
+    const carousel = document.querySelector('.carousel');
+    const productCard = carousel.closest('.product-card');
+    const images = carousel.querySelectorAll('.carousel-image');
+    let currentIndex = 0;
+    let autoRotateInterval = null;  // Initialize as null
+
+    // Drag functionality variables
+    let isDragging = false;
+    let lastX;
+
+    // Auto-rotate function
+    function startAutoRotate() {
+        // Clear any existing interval first
+        if (autoRotateInterval) {
+            clearInterval(autoRotateInterval);
+            autoRotateInterval = null;
+        }
+        
+        // Start new interval
+        autoRotateInterval = setInterval(() => {
+            images.forEach(img => img.style.opacity = '0');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].style.opacity = '1';
+        }, 400);
+    }
+
+    function stopAutoRotate() {
+        if (autoRotateInterval) {
+            clearInterval(autoRotateInterval);
+            autoRotateInterval = null;
+        }
+    }
+
+    function resetToFirstImage() {
+        images.forEach(img => img.style.opacity = '0');
+        currentIndex = 0;
+        images[currentIndex].style.opacity = '1';
+    }
+
+    // Product card hover events
+    productCard.addEventListener('mouseenter', () => {
+        stopAutoRotate();
+        resetToFirstImage();
+    });
+
+    productCard.addEventListener('mouseleave', () => {
+        if (!isDragging) {
+            startAutoRotate();
+        }
+    });
+
+    // Carousel drag events
+    carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastX = e.clientX;
+        carousel.style.cursor = 'grabbing';
+        stopAutoRotate();  // Ensure auto-rotate is stopped
+    });
+
+    window.addEventListener('mouseup', () => {
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+        startAutoRotate();  // Start a single new interval
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const deltaX = e.clientX - lastX;
+            
+            if (Math.abs(deltaX) > 5) { // Minimum movement threshold
+                if (deltaX > 0) {
+                    // Dragging right
+                    images.forEach(img => img.style.opacity = '0');
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    images[currentIndex].style.opacity = '1';
+                } else {
+                    // Dragging left
+                    images.forEach(img => img.style.opacity = '0');
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].style.opacity = '1';
+                }
+                lastX = e.clientX;
+            }
+        }
+    });
+
+    // Start initial auto-rotation
+    startAutoRotate();
+}
+
+// Ensure we only set up the carousel once
+document.addEventListener('DOMContentLoaded', () => {
+    setupCarousel();
+});
