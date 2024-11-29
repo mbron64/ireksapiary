@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
 /* Reset and base styles */
 * {
     margin: 0;
@@ -15,7 +17,8 @@
     
     /* Enhanced typography system */
     --display: 'Times New Roman', serif;  /* for large headlines */
-    --body: 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Patrick Hand', cursive;
+    /* --body: 'Helvetica Neue', Arial, sans-serif; */
     --caption: 'Courier New', monospace;  /* for small, technical text */
     
     /* Standardized spacing units */

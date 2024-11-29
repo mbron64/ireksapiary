@@ -388,14 +388,14 @@ class Cart {
 
     addItem(product) {
         const existingItem = this.items.find(item => 
-            item.title === product.title  // Compare by title instead of ID
+            item.title === product.title
         );
 
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
             this.items.push({
-                id: product.title,  // Use title as ID
+                id: product.title,
                 title: product.title,
                 price: product.price,
                 image: product.image,
