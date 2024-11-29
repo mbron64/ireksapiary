@@ -38,6 +38,10 @@
             <div class="nav-links">
                 <wired-button>Shop</wired-button>
                 <wired-button>Our Story</wired-button>
+                <wired-button class="cart-button" id="open-cart">
+                    Cart
+                    <span class="cart-count">0</span>
+                </wired-button>
             </div>
         </div>
     </nav>
@@ -133,6 +137,24 @@
                 </wired-card>
             </div>
         </section>
+    </div>
+
+    <!-- Add this right after the opening <body> tag -->
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2 class="text-headline">Your Cart</h2>
+            <wired-button id="close-cart">Close</wired-button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cart-total-amount">$0.00</span>
+            </div>
+            <wired-button class="checkout-button" style="width: 100%;">Checkout</wired-button>
+        </div>
     </div>
 </body>
 </html>

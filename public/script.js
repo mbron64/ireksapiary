@@ -102,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setupCarousel();
+
+    // Initialize cart when DOM is loaded
+    window.cart = new Cart();
 });
 
 function createHoneyDrips() {
@@ -318,3 +321,180 @@ function setupCarousel() {
 document.addEventListener('DOMContentLoaded', () => {
     setupCarousel();
 });
+
+// Add this near the top of your file
+class Cart {
+    constructor() {
+        this.items = [];
+        this.total = 0;
+        this.init();
+    }
+
+    init() {
+        // Load cart from localStorage if it exists
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            try {
+                this.items = JSON.parse(savedCart);
+                this.updateTotal();
+                // Immediately render the cart items after loading
+                this.renderCartItems();
+            } catch (e) {
+                console.error('Error loading cart from localStorage:', e);
+                localStorage.removeItem('cart'); // Clear invalid cart data
+            }
+        }
+
+        // Setup cart UI and add to cart buttons
+        this.setupCartUI();
+        this.setupAddToCartButtons();
+    }
+
+    setupCartUI() {
+        const cartOverlay = document.querySelector('.cart-overlay');
+        const openCartBtn = document.getElementById('open-cart');
+        const closeCartBtn = document.getElementById('close-cart');
+
+        openCartBtn?.addEventListener('click', () => {
+            cartOverlay.classList.add('open');
+            // Re-render items when cart is opened
+            this.renderCartItems();
+        });
+
+        closeCartBtn?.addEventListener('click', () => {
+            cartOverlay.classList.remove('open');
+        });
+
+        // Update initial cart count
+        this.updateCartCount();
+    }
+
+    setupAddToCartButtons() {
+        document.querySelectorAll('.add-to-cart-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.target.closest('.product-card');
+                const productInfo = productCard.querySelector('.product-info');
+                
+                const product = {
+                    title: productInfo.querySelector('h3').textContent,
+                    price: parseFloat(productInfo.querySelector('.price-tag').textContent.replace('$', '')),
+                    image: productCard.querySelector('.carousel-image')?.src || 'default-image.jpg'
+                };
+
+                this.addItem(product);
+            });
+        });
+    }
+
+    addItem(product) {
+        const existingItem = this.items.find(item => 
+            item.title === product.title  // Compare by title instead of ID
+        );
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            this.items.push({
+                id: product.title,  // Use title as ID
+                title: product.title,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            });
+        }
+
+        this.updateCart();
+    }
+
+    removeItem(productId) {
+        const itemIndex = this.items.findIndex(item => item.id === productId);
+        if (itemIndex > -1) {
+            // Decrease quantity by 1
+            this.items[itemIndex].quantity -= 1;
+            
+            // Only remove the item if quantity reaches 0
+            if (this.items[itemIndex].quantity <= 0) {
+                this.items.splice(itemIndex, 1);
+            }
+            
+            this.updateCart();
+        }
+    }
+
+    updateQuantity(productId, quantity) {
+        const item = this.items.find(item => item.id === productId);
+        if (item) {
+            item.quantity = quantity;
+            if (item.quantity <= 0) {
+                this.removeItem(productId);
+            } else {
+                this.updateCart();
+            }
+        }
+    }
+
+    updateCart() {
+        // Update total
+        this.updateTotal();
+
+        // Update cart count
+        this.updateCartCount();
+
+        // Update cart UI
+        this.renderCartItems();
+
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(this.items));
+    }
+
+    updateTotal() {
+        this.total = this.items.reduce((sum, item) => 
+            sum + (item.price * item.quantity), 0
+        );
+        
+        const totalElement = document.getElementById('cart-total-amount');
+        if (totalElement) {
+            totalElement.textContent = `$${this.total.toFixed(2)}`;
+        }
+    }
+
+    updateCartCount() {
+        const count = this.items.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCount = document.querySelector('.cart-count');
+        if (cartCount) {
+            cartCount.textContent = count;
+        }
+    }
+
+    renderCartItems() {
+        const cartItemsContainer = document.querySelector('.cart-items');
+        cartItemsContainer.innerHTML = '';
+
+        this.items.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <img src="${item.image}" alt="${item.title}">
+                <div class="cart-item-details">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                </div>
+                <div class="cart-quantity">
+                    <wired-button class="quantity-btn minus-btn" data-id="${item.id}">-</wired-button>
+                    <span>${item.quantity}</span>
+                    <wired-button class="quantity-btn plus-btn" data-id="${item.id}">+</wired-button>
+                </div>
+            `;
+
+            cartItemsContainer.appendChild(cartItem);
+
+            // Add event listeners for quantity buttons
+            cartItem.querySelector('.minus-btn').addEventListener('click', () => {
+                this.removeItem(item.id);
+            });
+            cartItem.querySelector('.plus-btn').addEventListener('click', () => {
+                this.addItem({ title: item.title, price: item.price, image: item.image });
+            });
+        });
+    }
+}
