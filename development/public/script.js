@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function createHoneyDrips() {
     const drips = document.querySelectorAll('.honey-drip');
+    if (!drips.length) return; // Exit if no drips found
     
     // Use the website's color palette for honey
     const honeyGradient = {
@@ -496,5 +497,59 @@ class Cart {
                 this.addItem({ title: item.title, price: item.price, image: item.image });
             });
         });
+    }
+    async checkout() {
+        try {
+            const response = await fetch('http://localhost:5000/create-checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    line_items: this.items.map(item => ({
+                        variant_id: item.variantId || '123456789',
+                        quantity: item.quantity,
+                    })),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const { checkoutUrl } = await response.json();
+            window.location.href = checkoutUrl;
+        } catch (error) {
+            console.error('Error during checkout:', error);
+            alert('There was an issue with checkout. Please try again.');
+        }
+    }
+
+    // Add this to bind the checkout button
+    setupCheckoutButton() {
+        const checkoutButton = document.querySelector('.checkout-button');
+        if (checkoutButton) {
+            checkoutButton.addEventListener('click', () => {
+                this.checkout();
+            });
+        }
+    }
+
+    init() {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            try {
+                this.items = JSON.parse(savedCart);
+                this.updateTotal();
+                this.renderCartItems();
+            } catch (e) {
+                console.error('Error loading cart from localStorage:', e);
+                localStorage.removeItem('cart');
+            }
+        }
+
+        this.setupCartUI();
+        this.setupAddToCartButtons();
+        this.setupCheckoutButton(); // Bind checkout button
     }
 }

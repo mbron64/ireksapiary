@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irek's Apiary | Small Batch Honey</title>
+    
+    <!-- Import Wired Elements -->
+    <script type="module" src="https://unpkg.com/wired-elements@3.0.0-rc.6/lib/wired-elements-bundled.js"></script>
+    
+    <!-- External libraries -->
+    <script src="https://unpkg.com/roughjs@4.5.2/bundled/rough.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/kursor@0.1.6/dist/kursor.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kursor@0.1.6/dist/kursor.css">
+    
+    <!-- Your stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Move these above your script.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+
+    <!-- Move your script.js to the end -->
+    <script src="script.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Announcement bar outside container -->
+    <div class="announcement-bar">
+        ORDER BY 12/15 FOR HOLIDAY DELIVERY!
+    </div>
+
+    <!-- Navigation outside container -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <h1>irek's apiary</h1>
+            </div>
+            <div class="nav-links">
+                <wired-button>Shop</wired-button>
+                <wired-button>Our Story</wired-button>
+                <wired-button class="cart-button" id="open-cart">
+                    Cart
+                    <span class="cart-count">0</span>
+                </wired-button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="asterisk hero-asterisk"></div>
+            <div class="asterisk asterisk-sm" style="top: 30%; left: 20%;"></div>
+            <div class="asterisk asterisk-lg" style="bottom: 25%; right: 15%;"></div>
+            <div class="hero-content">
+                <wired-card elevation="2" class="harvest-badge">
+                    <p>Now Harvesting: Spring 2024</p>
+                </wired-card>
+                
+                <h1 class="text-display">Raw honey, <br>just like nature made it</h1>
+            </div>
+        </section>
+
+        <!-- Product Section -->
+        <section class="products">
+            <div class="asterisk product-asterisk"></div>
+            <div class="asterisk asterisk-sm" style="top: 15%; right: 25%;"></div>
+            <wired-card class="product-card" elevation="1">
+                <div class="product-info">
+                    <span class="honey-type">Spring Collection</span>
+                    <h3>Spring Wildflower</h3>
+                    <p>Delicate floral notes with hints of clover and wildflowers</p>
+                    <div class="product-footer">
+                        <div class="jar-size">16 oz jar</div>
+                        <div class="price-tag">$24</div>
+                    </div>
+                    <div class="button-container">
+                        <wired-button class="add-to-cart-button">Add to Cart</wired-button>
+                    </div>
+                </div>
+                <div class="carousel" ondragstart="return false;">
+                    <div class="carousel-container">
+                        <img src="assets/products/honey1.png" alt="Jar of Irek's raw honey - view 1" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey2.png" alt="Jar of Irek's raw honey - view 2" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey3.png" alt="Jar of Irek's raw honey - view 3" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey4.png" alt="Jar of Irek's raw honey - view 4" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey5.png" alt="Jar of Irek's raw honey - view 5" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey6.png" alt="Jar of Irek's raw honey - view 6" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey7.png" alt="Jar of Irek's raw honey - view 7" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey8.png" alt="Jar of Irek's raw honey - view 8" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey9.png" alt="Jar of Irek's raw honey - view 9" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey10.png" alt="Jar of Irek's raw honey - view 10" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey11.png" alt="Jar of Irek's raw honey - view 11" class="carousel-image" draggable="false">
+                        <img src="assets/products/honey12.png" alt="Jar of Irek's raw honey - view 12" class="carousel-image" draggable="false">
+                    </div>
+                </div>
+                <div class="honey-drip"></div>
+            </wired-card>
+
+            <wired-card class="product-card" elevation="1">
+                <div class="product-info">
+                    <span class="honey-type">Summer Collection</span>
+                    <h3>Summer Bloom</h3>
+                    <p>Rich wildflower honey with notes of lavender and meadow flowers</p>
+                    <div class="product-footer">
+                        <div class="jar-size">16 oz jar</div>
+                        <div class="price-tag">$22</div>
+                    </div>
+                    <div class="button-container">
+                        <wired-button class="add-to-cart-button">Add to Cart</wired-button>
+                    </div>
+                </div>
+                <div class="honey-drip"></div>
+            </wired-card>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="asterisk feature-asterisk"></div>
+            <div class="asterisk asterisk-lg" style="bottom: 10%; right: 10%;"></div>
+            <h2>Why Choose Our Honey</h2>
+            <div class="feature-grid">
+                <wired-card class="feature">
+                    <h3>Small Batch</h3>
+                    <p>Carefully harvested in limited quantities</p>
+                </wired-card>
+                
+                <wired-card class="feature">
+                    <h3>Raw & Pure</h3>
+                    <p>Nothing added, nothing taken away</p>
+                </wired-card>
+                
+                <wired-card class="feature">
+                    <h3>Local Flora</h3>
+                    <p>From wildflowers in our fields</p>
+                </wired-card>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add this right after the opening <body> tag -->
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2 class="text-headline">Your Cart</h2>
+            <wired-button id="close-cart">Close</wired-button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cart-total-amount">$0.00</span>
+            </div>
+            <wired-button class="checkout-button" style="width: 100%;">Checkout</wired-button>
+        </div>
+    </div>
+</body>
+</html>
