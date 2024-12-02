@@ -7,12 +7,7 @@ import { submitEmail } from './EmailSignup/emailService';
 
 // Semantic styled components
 const Main = styled.main`
-  background-color: #f4e8c4;
-  /* Color History:
-   * #3b2f20 - olive-brown
-   * #2b2420 - dark brown
-   * #f4e4d4 - cream
-   */
+  background-color: #3b2f20;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -25,6 +20,7 @@ const Section = styled.section`
   max-width: 400px;
   padding: 0.75rem;
   text-align: center;
+  position: relative;
 `;
 
 const Logo = styled.h1`
@@ -34,18 +30,21 @@ const Logo = styled.h1`
   margin-bottom: 3rem;
   letter-spacing: -0.03em;
   white-space: nowrap;
-  color: #3b2f20;
+  color: #f4e8c4;
   transform: scaleX(1);
   transform-origin: center;
   text-transform: none;
 `;
 
 const TitleWrapper = styled.div`
-  width: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
   overflow-x: hidden;
   margin: 0 auto;
   padding: 0;
-  position: relative;
+  height: 4rem;
   
   /* Hide scrollbar */
   -ms-overflow-style: none;
@@ -62,7 +61,7 @@ const Title = styled.h2`
   font-weight: normal;
   text-align: center;
   white-space: nowrap;
-  color: #3b2f20;
+  color: #f4e8c4;
 `;
 
 const Subtitle = styled.p`
@@ -70,7 +69,7 @@ const Subtitle = styled.p`
   font-size: 0.75rem;
   letter-spacing: -0.02em;
   margin-bottom: 1.2rem;
-  color: #3b2f20;
+  color: #f4e8c4;
 `;
 
 const Form = styled.form`
@@ -84,37 +83,37 @@ const Form = styled.form`
 const Input = styled.input`
   padding: 0.75rem;
   font-size: 0.875rem;
-  border: 1px solid #3b2f20;
+  border: 1px solid #f4e8c4;
   background: transparent;
-  color: #3b2f20;
+  color: #f4e8c4;
   border-radius: 3px;
   font-family: 'Crimson Text', serif;
 
   &:focus {
     outline: none;
-    border-color: #3b2f20;
+    border-color: #f4e8c4;
     border-width: 2px;
   }
 
   &::selection {
-    background-color: rgba(59, 47, 32, 0.2);
+    background-color: rgba(244, 232, 196, 0.2);
   }
 
   &::-moz-selection {
-    background-color: rgba(59, 47, 32, 0.2);
+    background-color: rgba(244, 232, 196, 0.2);
   }
 
   &::placeholder {
     font-family: 'Crimson Text', serif;
-    color: #3b2f20;
+    color: #f4e8c4;
   }
 `;
 
 const Button = styled.button`
   padding: 0.75rem;
   font-size: 0.875rem;
-  background-color: #3b2f20;
-  color: #f4e4d4;
+  background-color: #f4e8c4;
+  color: #3b2f20;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -192,33 +191,39 @@ function ComingSoon() {
             direction="left"
           >
             <Title>
-              Don't Just Smell the Flowers, Taste Them &nbsp;&nbsp;&nbsp;
-              <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#3b2f20' }}>
-                ✿
-              </span>&nbsp;&nbsp;&nbsp;
+              Don't Just Smell the Flowers, Taste Them
+              <span style={{ display: 'inline-block', margin: '0 2rem' }}>
+                <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#f4e8c4' }}>
+                  ✿
+                </span>
+              </span>
             </Title>
             <Title>
-              Don't Just Smell the Flowers, Taste Them &nbsp;&nbsp;&nbsp;
-              <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#3b2f20' }}>
-                <GiHoneyJar style={{ fontSize: '1.3rem' }} />
-              </span>&nbsp;&nbsp;&nbsp;
+              Don't Just Smell the Flowers, Taste Them
+              <span style={{ display: 'inline-block', margin: '0 2rem' }}>
+                <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#f4e8c4' }}>
+                  <GiHoneyJar />
+                </span>
+              </span>
             </Title>
           </StyledMarquee>
         </TitleWrapper>
-        <Subtitle>Coming soon. Sign up to learn more.</Subtitle>
-        <Form onSubmit={handleSubmit}>
-          <Input 
-            type="email" 
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-label="Email address"
-            required
-          />
-          <Button type="submit">Sign Up</Button>
-          {status && <Subtitle style={{ color: '#3b2f20' }}>Thanks for signing up ;)</Subtitle>}
-          {error && <Subtitle style={{ color: '#cc0000' }}>{error}</Subtitle>}
-        </Form>
+        <div style={{ marginTop: '7rem' }}>
+          <Subtitle>Coming soon. Sign up to learn more.</Subtitle>
+          <Form onSubmit={handleSubmit}>
+            <Input 
+              type="email" 
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-label="Email address"
+              required
+            />
+            <Button type="submit">Sign Up</Button>
+            {status && <Subtitle style={{ color: '#f4e8c4' }}>Thanks for signing up ;)</Subtitle>}
+            {error && <Subtitle style={{ color: '#cc0000' }}>{error}</Subtitle>}
+          </Form>
+        </div>
       </Section>
     </Main>
   );
