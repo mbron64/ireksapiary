@@ -41,17 +41,10 @@ const TitleWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  overflow-x: hidden;
-  margin: 0 auto;
+  overflow: hidden;
+  margin: 0;
   padding: 0;
   height: 4rem;
-  
-  /* Hide scrollbar */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const Title = styled.h2`
@@ -144,9 +137,34 @@ const StyledMarquee = styled(Marquee)`
   width: 100%;
   
   .marquee-container {
-    justify-content: flex-start !important;
+    gap: 4rem;
   }
 `;
+
+const MarqueeContent = () => (
+  <Title>
+    Don't Just Smell the Flowers, Taste Them
+    <span style={{ 
+      fontSize: '1.5rem', 
+      position: 'relative', 
+      top: '-2px', 
+      color: '#f4e8c4',
+      margin: '0 2rem'
+    }}>
+      ✿
+    </span>
+    Don't Just Smell the Flowers, Taste Them
+    <span style={{ 
+      fontSize: '1.5rem', 
+      position: 'relative', 
+      top: '-2px', 
+      color: '#f4e8c4',
+      margin: '0 2rem'
+    }}>
+      <GiHoneyJar style={{ fontSize: '1.3rem' }} />
+    </span>
+  </Title>
+);
 
 function ComingSoon() {
   const [email, setEmail] = useState('');
@@ -188,24 +206,9 @@ function ComingSoon() {
             loop={0}
             delay={0}
             pauseOnHover={false}
-            direction="left"
           >
-            <Title>
-              Don't Just Smell the Flowers, Taste Them
-              <span style={{ display: 'inline-block', margin: '0 2rem' }}>
-                <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#f4e8c4' }}>
-                  ✿
-                </span>
-              </span>
-            </Title>
-            <Title>
-              Don't Just Smell the Flowers, Taste Them
-              <span style={{ display: 'inline-block', margin: '0 2rem' }}>
-                <span style={{ fontSize: '1.5rem', position: 'relative', top: '-2px', color: '#f4e8c4' }}>
-                  <GiHoneyJar />
-                </span>
-              </span>
-            </Title>
+            <MarqueeContent />
+            <MarqueeContent />
           </StyledMarquee>
         </TitleWrapper>
         <div style={{ marginTop: '7rem' }}>
