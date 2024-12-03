@@ -52,12 +52,12 @@ body::after {
 .coming-soon {
   position: relative;
   z-index: 2;
-  background-color: #3b432f; /* Changed from #f4e8c4 to #3b432f */
+  background-color: #f4e8c4; /* Changed from #3b432f back to #f4e8c4 */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f4e8c4; /* Changed from #3b432f to #f4e8c4 */
+  color: #3b432f; /* Changed from #f4e8c4 back to #3b432f */
   text-align: center;
   padding: 15px;
 }

@@ -7,7 +7,7 @@ import { submitEmail } from './EmailSignup/emailService';
 
 // Semantic styled components
 const Main = styled.main`
-  background-color: #3b2f20;
+  background-color: #f4e8c4;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -24,16 +24,27 @@ const Section = styled.section`
 `;
 
 const Logo = styled.h1`
-  font-family: 'Crimson Text', serif;
+  font-family: 'Crimson Text', 'Times New Roman', serif;
   font-size: 3.75rem;
   font-weight: 510;
   margin-bottom: 3rem;
   letter-spacing: -0.03em;
   white-space: nowrap;
-  color: #f4e8c4;
+  color: #3b2f20;
   transform: scaleX(1);
   transform-origin: center;
   text-transform: none;
+
+  @font-face {
+    font-family: 'Crimson Text';
+    src: local('Crimson Text');
+    size-adjust: 100%;
+  }
+
+  &:not(:local('Crimson Text')) {
+    letter-spacing: -0.05em;
+    font-weight: normal;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -48,13 +59,23 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-family: 'Crimson Text', serif;
+  font-family: 'Crimson Text', 'Times New Roman', serif;
   font-size: 2.2rem;
   margin-bottom: 1rem;
   font-weight: normal;
   text-align: center;
   white-space: nowrap;
-  color: #f4e8c4;
+  color: #3b2f20;
+
+  @font-face {
+    font-family: 'Crimson Text';
+    src: local('Crimson Text');
+    size-adjust: 100%;
+  }
+
+  &:not(:local('Crimson Text')) {
+    letter-spacing: -0.04em;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -62,7 +83,7 @@ const Subtitle = styled.p`
   font-size: 0.75rem;
   letter-spacing: -0.02em;
   margin-bottom: 1.2rem;
-  color: #f4e8c4;
+  color: #3b2f20;
 `;
 
 const Form = styled.form`
@@ -76,16 +97,15 @@ const Form = styled.form`
 const Input = styled.input`
   padding: 0.75rem;
   font-size: 0.875rem;
-  border: 1px solid #f4e8c4;
+  border: 1px solid #3b2f20;
   background: transparent;
-  color: #f4e8c4;
+  color: #3b2f20;
   border-radius: 3px;
   font-family: 'Crimson Text', serif;
 
   &:focus {
     outline: none;
-    border-color: #f4e8c4;
-    border-width: 2px;
+    border: 2px solid #3b2f20;
   }
 
   &::selection {
@@ -98,15 +118,15 @@ const Input = styled.input`
 
   &::placeholder {
     font-family: 'Crimson Text', serif;
-    color: #f4e8c4;
+    color: #3b2f20;
   }
 `;
 
 const Button = styled.button`
   padding: 0.75rem;
   font-size: 0.875rem;
-  background-color: #f4e8c4;
-  color: #3b2f20;
+  background-color: #3b2f20;
+  color: #f4e8c4;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -148,7 +168,7 @@ const MarqueeContent = () => (
       fontSize: '1.5rem', 
       position: 'relative', 
       top: '-2px', 
-      color: '#f4e8c4',
+      color: '#3b2f20',
       margin: '0 2rem'
     }}>
       ✿
@@ -158,13 +178,21 @@ const MarqueeContent = () => (
       fontSize: '1.5rem', 
       position: 'relative', 
       top: '-2px', 
-      color: '#f4e8c4',
+      color: '#3b2f20',
       margin: '0 2rem'
     }}>
       <GiHoneyJar style={{ fontSize: '1.3rem' }} />
     </span>
   </Title>
 );
+
+const StatusMessage = styled(Subtitle)`
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  transition: opacity 0.3s ease;
+  opacity: ${props => props.show ? 1 : 0};
+  color: ${props => props.error ? '#cc0000' : '#3b2f20'};
+`;
 
 function ComingSoon() {
   const [email, setEmail] = useState('');
@@ -198,7 +226,17 @@ function ComingSoon() {
   return (
     <Main>
       <Section>
-        <Logo>irek's apiary</Logo>
+        <Logo>
+          irek<span style={{ 
+            display: 'inline-block', 
+            transform: 'translateY(-0.65em)',
+            marginLeft: '0.05em',
+            marginRight: '-0.05em',
+            fontSize: '0.9em'
+          }}>
+            ,
+          </span>s apiary
+        </Logo>
         <TitleWrapper>
           <StyledMarquee
             speed={20}
@@ -223,8 +261,16 @@ function ComingSoon() {
               required
             />
             <Button type="submit">Sign Up</Button>
-            {status && <Subtitle style={{ color: '#f4e8c4' }}>Thanks for signing up ;)</Subtitle>}
-            {error && <Subtitle style={{ color: '#cc0000' }}>{error}</Subtitle>}
+            {status && (
+              <StatusMessage show={!!status}>
+                Thanks for signing up ;)
+              </StatusMessage>
+            )}
+            {error && (
+              <StatusMessage show={!!error} error>
+                {error}
+              </StatusMessage>
+            )}
           </Form>
         </div>
       </Section>
