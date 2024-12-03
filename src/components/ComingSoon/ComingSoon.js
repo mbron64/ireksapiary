@@ -24,9 +24,9 @@ const Section = styled.section`
 `;
 
 const Logo = styled.h1`
-  font-family: 'Crimson Text', 'Times New Roman', serif;
+  font-family: 'EB Garamond', serif;
   font-size: 3.75rem;
-  font-weight: 510;
+  font-weight: 590;
   margin-bottom: 3rem;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -36,12 +36,12 @@ const Logo = styled.h1`
   text-transform: none;
 
   @font-face {
-    font-family: 'Crimson Text';
-    src: local('Crimson Text');
+    font-family: 'EB Garamond';
+    src: local('EB Garamond');
     size-adjust: 100%;
   }
 
-  &:not(:local('Crimson Text')) {
+  &:not(:local('EB Garamond')) {
     letter-spacing: -0.05em;
     font-weight: normal;
   }
@@ -229,7 +229,7 @@ function ComingSoon() {
         <Logo>
           irek<span style={{ 
             display: 'inline-block', 
-            transform: 'translateY(-0.65em)',
+            transform: 'translateY(-0.66em)',
             marginLeft: '0.05em',
             marginRight: '-0.05em',
             fontSize: '0.9em'
