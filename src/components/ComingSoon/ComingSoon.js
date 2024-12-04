@@ -183,7 +183,7 @@ const MarqueeContent = () => (
       position: 'relative', 
       top: '-2px', 
       color: '#3b2f20',
-      margin: '0 2rem'
+      margin: '0 1.7rem'
     }}>
       ✿
     </span>
@@ -193,19 +193,23 @@ const MarqueeContent = () => (
       position: 'relative', 
       top: '-2px',
       color: '#3b2f20',
-      margin: '0 2rem',
-      marginRight: '-2rem',
+      margin: '0 1.7rem',
+      marginRight: '-2.3rem',
       [`@media (max-width: 768px)`]: {
-        marginRight: '-1rem'  // Less negative margin on mobile
+        marginRight: '-1.7rem'
       }
     }}>
-      <GiHoneyJar style={{ fontSize: '1.3rem' }} />
+      <GiHoneyJar style={{ 
+        fontSize: '1.3rem',
+        position: 'relative',
+        top: '2px'
+      }} />
     </span>
   </Title>
 );
 
 const StatusMessage = styled(Subtitle)`
-  margin-top: 1rem;
+  margin-top: 2rem;
   transition: opacity 0.3s ease;
   opacity: ${props => props.show ? 1 : 0};
   color: ${props => props.error ? '#cc0000' : '#3b2f20'};
