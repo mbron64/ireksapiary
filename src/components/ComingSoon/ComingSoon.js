@@ -49,10 +49,10 @@ const Logo = styled.h1`
 
 const TitleWrapper = styled.div`
   position: absolute;
-  left: 50%;
+  left: 55%;
   transform: translateX(-50%);
-  width: 100vw;
-  overflow: hidden;
+  width: 110vw;
+  overflow: visible;
   margin: 0;
   padding: 0;
   height: 4rem;
@@ -66,6 +66,9 @@ const Title = styled.h2`
   text-align: center;
   white-space: nowrap;
   color: #3b2f20;
+  letter-spacing: -0.03em;
+  transform: scaleX(0.95);
+  transform-origin: center;
 
   @font-face {
     font-family: 'Crimson Text';
@@ -161,7 +164,14 @@ const StyledMarquee = styled(Marquee)`
   width: 100%;
   
   .marquee-container {
-    gap: 4rem;
+    gap: 0;
+    overflow: visible;
+    margin-left: -4rem;
+  }
+
+  .marquee {
+    transform: translateX(-4rem);
+    min-width: auto !important;
   }
 `;
 
@@ -181,9 +191,13 @@ const MarqueeContent = () => (
     <span style={{ 
       fontSize: '1.5rem', 
       position: 'relative', 
-      top: '-2px', 
+      top: '-2px',
       color: '#3b2f20',
-      margin: '0 2rem'
+      margin: '0 2rem',
+      marginRight: '-2rem',
+      [`@media (max-width: 768px)`]: {
+        marginRight: '-1rem'  // Less negative margin on mobile
+      }
     }}>
       <GiHoneyJar style={{ fontSize: '1.3rem' }} />
     </span>
@@ -259,6 +273,7 @@ function ComingSoon() {
             loop={0}
             delay={0}
             pauseOnHover={false}
+            initialLeftPosition={-200}
           >
             <MarqueeContent />
             <MarqueeContent />
