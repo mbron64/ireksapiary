@@ -92,6 +92,7 @@ const Form = styled.form`
   gap: 0.75rem;
   max-width: 300px;
   margin: 0 auto;
+  min-height: 160px;
 `;
 
 const Input = styled.input`
@@ -102,6 +103,7 @@ const Input = styled.input`
   color: #3b2f20;
   border-radius: 3px;
   font-family: 'Crimson Text', serif;
+  opacity: ${props => props.disabled ? 0.6 : 1};
 
   &:focus {
     outline: none;
@@ -119,22 +121,24 @@ const Input = styled.input`
   &::placeholder {
     font-family: 'Crimson Text', serif;
     color: #3b2f20;
+    opacity: ${props => props.disabled ? 0.4 : 0.7};
   }
 `;
 
 const Button = styled.button`
   padding: 0.75rem;
   font-size: 0.875rem;
-  background-color: #3b2f20;
-  color: #f4e8c4;
+  background-color: ${props => props.disabled ? 'rgba(59, 47, 32, 0.3)' : '#3b2f20'};
+  color: ${props => props.disabled ? '#3b2f20' : '#f4e8c4'};
   border: none;
   border-radius: 3px;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  transition: all 0.2s ease;
   font-family: 'Crimson Text', serif;
+  opacity: ${props => props.disabled ? 0.8 : 1};
 
   &:hover {
-    opacity: 0.9;
+    opacity: ${props => props.disabled ? 0.8 : 0.9};
   }
 `;
 
@@ -188,28 +192,38 @@ const MarqueeContent = () => (
 
 const StatusMessage = styled(Subtitle)`
   margin-top: 1rem;
-  font-size: 0.875rem;
   transition: opacity 0.3s ease;
   opacity: ${props => props.show ? 1 : 0};
   color: ${props => props.error ? '#cc0000' : '#3b2f20'};
+  font-size: 0.75rem;
+  height: 1rem;
+  position: absolute;
+  width: 100%;
+  text-align: center;
 `;
 
 function ComingSoon() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Prevent double submission
+    if (isSubmitting) return;
+    
     // Clear previous messages
     setStatus('');
     setError('');
+    setIsSubmitting(true);
     
     // Validate email
     const validation = validateEmail(email);
     if (!validation.isValid) {
       setError(validation.error);
+      setIsSubmitting(false);
       return;
     }
 
@@ -221,6 +235,7 @@ function ComingSoon() {
     } else {
       setError('Oops! Something went wrong.');
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -259,18 +274,26 @@ function ComingSoon() {
               onChange={(e) => setEmail(e.target.value)}
               aria-label="Email address"
               required
+              disabled={isSubmitting}
             />
-            <Button type="submit">Sign Up</Button>
-            {status && (
-              <StatusMessage show={!!status}>
-                Thanks for signing up ;)
-              </StatusMessage>
-            )}
-            {error && (
-              <StatusMessage show={!!error} error>
-                {error}
-              </StatusMessage>
-            )}
+            <Button 
+              type="submit" 
+              disabled={isSubmitting}
+            >
+              Sign Up
+            </Button>
+            <div style={{ position: 'relative', height: '2rem' }}>
+              {status && (
+                <StatusMessage show={!!status}>
+                  Thanks for signing up ;)
+                </StatusMessage>
+              )}
+              {error && (
+                <StatusMessage show={!!error} error>
+                  {error}
+                </StatusMessage>
+              )}
+            </div>
           </Form>
         </div>
       </Section>
