@@ -1,20 +1,27 @@
 import emailjs from '@emailjs/browser';
 import { EMAIL_CONFIG } from '../../../config/email';
 
-// Initialize EmailJS
-emailjs.init(EMAIL_CONFIG.publicKey);
+// Initialize EmailJS only if publicKey is available
+if (EMAIL_CONFIG.publicKey) {
+  emailjs.init(EMAIL_CONFIG.publicKey);
+} else if (process.env.NODE_ENV === 'development') {
+  console.warn('EmailJS public key not configured. Email signup will not work.');
+}
 
 export const submitEmail = async (email) => {
   try {
-    console.log('Starting email submission process...', {
-      serviceId: EMAIL_CONFIG.serviceId,
-      templateId: EMAIL_CONFIG.templateId,
-      thankYouTemplateId: EMAIL_CONFIG.thankYouTemplateId
-    });
+    // Validate email config before attempting to send
+    if (!EMAIL_CONFIG.serviceId || !EMAIL_CONFIG.templateId || !EMAIL_CONFIG.publicKey) {
+      throw new Error('Email service not configured. Please contact support.');
+    }
+
+    // Log only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Starting email submission...');
+    }
     
     // Send admin notification
-    console.log('Sending admin notification...');
-    const adminNotification = await emailjs.send(
+    await emailjs.send(
       EMAIL_CONFIG.serviceId,
       EMAIL_CONFIG.templateId,
       {
@@ -26,11 +33,13 @@ export const submitEmail = async (email) => {
         to_email: EMAIL_CONFIG.toEmail
       }
     );
-    console.log('Admin notification sent:', adminNotification);
 
-    // Send thank you email with modified template parameters
-    console.log('Sending thank you email...');
-    const thankYouEmail = await emailjs.send(
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Admin notification sent successfully');
+    }
+
+    // Send thank you email
+    await emailjs.send(
       EMAIL_CONFIG.serviceId,
       EMAIL_CONFIG.thankYouTemplateId,
       {
@@ -42,28 +51,25 @@ export const submitEmail = async (email) => {
         to_email: email
       }
     );
-    console.log('Thank you email sent:', thankYouEmail);
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Thank you email sent successfully');
+    }
 
     return { success: true };
   } catch (error) {
-    // More detailed error logging
-    console.error('Email submission failed:', {
-      error: error,
-      message: error.message,
-      text: error.text,
-      errorCode: error.code,
-      status: error.status,
-      name: error.name,
-      serviceId: EMAIL_CONFIG.serviceId,
-      templateIds: {
-        admin: EMAIL_CONFIG.templateId,
-        thankYou: EMAIL_CONFIG.thankYouTemplateId
-      }
-    });
+    // Log detailed errors only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Email submission failed:', {
+        message: error.message,
+        text: error.text,
+        status: error.status
+      });
+    }
     
     return { 
       success: false, 
-      error: error.text || error.message || 'Failed to send email'
+      error: error.text || error.message || 'Failed to send email. Please try again.'
     };
   }
 }; 

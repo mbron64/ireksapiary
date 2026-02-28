@@ -6,23 +6,32 @@ const config = {
   toEmail: process.env.REACT_APP_TO_EMAIL
 };
 
-// Add more detailed logging
-console.log('Email Config Loading:', {
-  serviceId: config.serviceId,
-  templateId: config.templateId,
-  thankYouTemplateId: config.thankYouTemplateId,
-  publicKey: config.publicKey ? 'Present' : 'Missing',
-  toEmail: config.toEmail
-});
+// Only log in development
+if (process.env.NODE_ENV === 'development') {
+  console.log('Email Config Loading:', {
+    serviceId: config.serviceId ? '✓' : '✗',
+    templateId: config.templateId ? '✓' : '✗',
+    thankYouTemplateId: config.thankYouTemplateId ? '✓' : '✗',
+    publicKey: config.publicKey ? '✓' : '✗',
+    toEmail: config.toEmail ? '✓' : '✗'
+  });
+}
 
 // Verify all required values are present
 if (!config.serviceId || !config.templateId || !config.thankYouTemplateId || !config.publicKey) {
-  console.error('Missing required email configuration!', {
-    serviceId: !!config.serviceId,
-    templateId: !!config.templateId,
-    thankYouTemplateId: !!config.thankYouTemplateId,
-    publicKey: !!config.publicKey
-  });
+  const error = new Error('Missing required email configuration. Please check your .env file.');
+  if (process.env.NODE_ENV === 'development') {
+    console.error('Missing email config:', {
+      serviceId: !!config.serviceId,
+      templateId: !!config.templateId,
+      thankYouTemplateId: !!config.thankYouTemplateId,
+      publicKey: !!config.publicKey
+    });
+  }
+  // Don't throw in production to avoid breaking the app
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn(error.message);
+  }
 }
 
 export const EMAIL_CONFIG = config; 

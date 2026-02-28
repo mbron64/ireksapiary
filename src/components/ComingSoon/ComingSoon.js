@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import { GiHoneyJar } from 'react-icons/gi';
 import { validateEmail } from '../../utils/validation';
@@ -145,20 +146,6 @@ const Button = styled.button`
   }
 `;
 
-const scrollLeft = keyframes`
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-`;
-
-const ScrollingText = styled.div`
-  animation: ${scrollLeft} 20s linear infinite;
-  white-space: nowrap;
-`;
-
 // Add styles for the Marquee wrapper
 const StyledMarquee = styled(Marquee)`
   width: 100%;
@@ -211,13 +198,29 @@ const MarqueeContent = () => (
 const StatusMessage = styled(Subtitle)`
   margin-top: 2rem;
   transition: opacity 0.3s ease;
-  opacity: ${props => props.show ? 1 : 0};
-  color: ${props => props.error ? '#cc0000' : '#3b2f20'};
+  opacity: ${props => props.$show ? 1 : 0};
+  color: ${props => props.$error ? '#cc0000' : '#3b2f20'};
   font-size: 0.75rem;
   height: 1rem;
   position: absolute;
   width: 100%;
   text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  display: inline-block;
+  font-family: 'Crimson Text', 'Times New Roman', serif;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+  color: #3b2f20;
+  text-decoration: none;
+  border-bottom: 1px solid #3b2f20;
+  transition: opacity 0.2s ease, border-bottom 0.2s ease;
+  
+  &:hover {
+    opacity: 0.8;
+    border-bottom: 1px solid transparent;
+  }
 `;
 
 function ComingSoon() {
@@ -303,12 +306,12 @@ function ComingSoon() {
             </Button>
             <div style={{ position: 'relative', height: '2rem' }}>
               {status && (
-                <StatusMessage show={!!status}>
+                <StatusMessage $show={!!status}>
                   Thanks for signing up ;)
                 </StatusMessage>
               )}
               {error && (
-                <StatusMessage show={!!error} error>
+                <StatusMessage $show={!!error} $error>
                   {error}
                 </StatusMessage>
               )}
