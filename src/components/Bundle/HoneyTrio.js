@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import { useCart } from '../../context/CartContext';
 import { PRODUCTS, BUNDLE } from '../../config/products';
 
@@ -25,6 +26,11 @@ export default function HoneyTrio() {
 
   return (
     <PageWrapper announcement="Save 15% with The Honey Trio">
+      <SEO
+        title="The Honey Trio | All Three Harvests"
+        description="One jar of each: Spring, Summer, and Fall honey. The complete Irek's Apiary experience. Save 15% on the bundle."
+        path="/bundle/trio"
+      />
       <Hero>
         <HeroContent>
           <Label>Save 15%</Label>

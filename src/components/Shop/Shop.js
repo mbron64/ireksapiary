@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import { useCart } from '../../context/CartContext';
 import { PRODUCTS, BUNDLE } from '../../config/products';
 
@@ -23,6 +24,11 @@ export default function Shop() {
 
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
+      <SEO
+        title="Shop Raw Honey | Spring, Summer & Fall"
+        description="Raw, unfiltered honey from Vestal, NY. Spring, Summer, and Fall harvests. Free shipping on honey orders over $50."
+        path="/shop"
+      />
       <Header>
         <Label>The Collection</Label>
         <Title>Shop All Honey</Title>

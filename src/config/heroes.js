@@ -13,7 +13,7 @@ export const HEROES = {
   },
 
   nucs: {
-    tagline: 'Spring 2026 · Limited Availability',
+    tagline: 'Spring 2026 · Vestal, NY · Limited Availability',
     headline: 'Start Your\nOwn Hive',
     cta: { label: 'Reserve a Nuc', to: '/nucs' },
     image: {

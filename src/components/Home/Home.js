@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import JarCarousel from '../Products/JarCarousel';
 import { useCart } from '../../context/CartContext';
 import { PRODUCTS, BUNDLE } from '../../config/products';
@@ -35,6 +36,10 @@ export default function Home() {
 
   return (
     <PageWrapper announcement="Spring 2026 Nucs · Limited Availability · Reserve Yours" announcementLink="/nucs">
+      <SEO
+        path="/"
+        description="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY. Small-batch beekeeping since 2012. Free shipping on honey orders over $50."
+      />
       <Hero>
         <HeroContent>
           <HeroTagline>{hero.tagline}</HeroTagline>

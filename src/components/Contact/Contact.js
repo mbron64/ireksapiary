@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import { submitEmail } from '../ComingSoon/EmailSignup/emailService';
 
 export default function Contact() {
@@ -27,6 +28,11 @@ export default function Contact() {
 
   return (
     <PageWrapper>
+      <SEO
+        title="Contact | Vestal, NY"
+        description="Questions about honey, nucs, or orders? Reach out to Irek's Apiary in Vestal, NY. We'd love to hear from you."
+        path="/contact"
+      />
       <Header>
         <Label>Get in Touch</Label>
         <Title>Contact Us</Title>

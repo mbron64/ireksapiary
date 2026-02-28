@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import { useCart } from '../../context/CartContext';
 
 const NUC_PRICE = 190;
@@ -9,7 +10,7 @@ const TOTAL_PER_NUC = NUC_PRICE + BOX_DEPOSIT;
 
 const SPECS = [
   { label: '5 Deep Frames', value: 'Drawn comb, ready to work' },
-  { label: 'Laying Queen', value: 'Mated, proven, and running the show' },
+  { label: 'Laying Queen', value: 'Locally adapted, mixed genetics' },
   { label: '~5,000 Bees', value: 'Foragers, nurses, the whole crew' },
   { label: 'Inspected', value: 'Healthy and verified before handoff' },
 ];
@@ -21,7 +22,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Where?',
-    a: 'Our apiary in Vestal, NY. We don\'t ship live bees.',
+    a: 'Our apiary in Vestal, NY, just outside Binghamton. We serve the Southern Tier and broader Upstate New York area. We don\'t ship live bees.',
   },
   {
     q: 'What should I bring?',
@@ -43,10 +44,6 @@ export default function Nucs() {
   const [quantity, setQuantity] = useState(1);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const checkoutTotal = payNow
-    ? TOTAL_PER_NUC * quantity
-    : BOX_DEPOSIT * quantity;
-
   const handleAddToCart = () => {
     addToCart({
       id: 'nuc-box-deposit',
@@ -56,6 +53,7 @@ export default function Nucs() {
       price: BOX_DEPOSIT,
       image: '/assets/nucs/nucs2.jpg',
       stripePriceId: process.env.REACT_APP_STRIPE_NUC_BOX_DEPOSIT_PRICE_ID || '',
+      pickup: true,
     }, quantity);
     if (payNow) {
       addToCart({
@@ -66,12 +64,50 @@ export default function Nucs() {
         price: NUC_PRICE,
         image: '/assets/nucs/nucsFrame.jpg',
         stripePriceId: process.env.REACT_APP_STRIPE_NUC_PRICE_ID || '',
+        pickup: true,
       }, quantity);
     }
   };
 
   return (
     <PageWrapper announcement="Spring 2026 Nucs · Limited Availability · Reserve Yours" announcementLink="/nucs">
+      <SEO
+        title="5-Frame Honeybee Nucs for Sale 2026 | Binghamton & Southern Tier, NY"
+        description="Pre-order 5-frame honeybee nucs for spring 2026. Locally adapted queens, ~5,000 bees, $190 + refundable box deposit. Pickup in Vestal, NY. Limited availability."
+        path="/nucs"
+        image="/assets/nucs/nucsFrame.jpg"
+      >
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "5-Frame Honeybee Nuc - Spring 2026",
+          "description": "A ready-to-go 5-frame nucleus colony from Irek's Apiary in Vestal, NY. Locally adapted queen, ~5,000 bees. Available for pickup spring 2026. Serving the Binghamton, Southern Tier, and Upstate New York area.",
+          "image": "https://ireksapiary.com/assets/nucs/nucsFrame.jpg",
+          "brand": { "@type": "Brand", "name": "Irek's Apiary" },
+          "offers": {
+            "@type": "Offer",
+            "price": "190.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/PreOrder",
+            "url": "https://ireksapiary.com/nucs",
+            "seller": { "@type": "Organization", "name": "Irek's Apiary" },
+            "validFrom": "2026-01-01",
+            "priceValidUntil": "2026-06-30"
+          }
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": FAQ_ITEMS.map(item => ({
+            "@type": "Question",
+            "name": item.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": item.a,
+            }
+          }))
+        })}</script>
+      </SEO>
       <HeroGrid>
         <ImageCol>
           <HeroImg src="/assets/nucs/nucsFrame.jpg" alt="Beekeeper inspecting a nuc frame" />
@@ -83,10 +119,11 @@ export default function Nucs() {
           <PriceMain>${NUC_PRICE}</PriceMain>
           <PriceSub>+ $50 refundable box deposit</PriceSub>
           <Description>
-            A ready-to-go colony from our Vestal, NY apiary. Laying queen,
+            A ready-to-go colony from our apiary in Vestal, NY, serving
+            the Binghamton and Southern Tier area. Locally adapted queen,
             healthy brood, ~5,000 bees, and enough stores to hit the ground
-            running. Whether you're starting your first hive or adding another,
-            this is the way to do it.
+            running. Whether you're starting your first hive or adding
+            another, this is the way to do it.
           </Description>
 
           <OptionLabel>Payment</OptionLabel>
@@ -156,8 +193,8 @@ export default function Nucs() {
           <PickupCard>
             <PickupLabel>Where</PickupLabel>
             <PickupText>
-              Our apiary in Vestal, NY. Local pickup only. We don't
-              ship live bees.
+              Our apiary in Vestal, NY, just outside Binghamton. Serving
+              the Southern Tier and Upstate NY. We don't ship live bees.
             </PickupText>
           </PickupCard>
           <PickupCard>

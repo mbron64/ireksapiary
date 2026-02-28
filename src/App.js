@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './theme';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/Cart/CartDrawer';
@@ -62,10 +63,12 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <CartProvider>
-        <RouterProvider router={router} />
-      </CartProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }

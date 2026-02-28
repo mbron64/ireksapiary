@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import { SUBSCRIPTION_DISCOUNT } from '../../config/products';
 
 const BENEFITS = [
@@ -21,6 +22,11 @@ const FAQ = [
 export default function Subscribe() {
   return (
     <PageWrapper>
+      <SEO
+        title="Honey Subscription | Monthly Delivery"
+        description="Get raw, local honey delivered every month. Save on every order, cancel anytime. Free shipping on all subscriptions."
+        path="/subscribe"
+      />
       <Hero>
         <Label>Subscribe & Save</Label>
         <Title>Honey, On Repeat</Title>

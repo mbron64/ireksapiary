@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 
 export default function About() {
   return (
     <PageWrapper>
+      <SEO
+        title="About | Small-Batch Beekeeping | Vestal, NY"
+        description="Family-run apiary in Vestal, NY since 2012. We keep healthy bees and harvest raw, unfiltered honey the way it's supposed to be."
+        path="/about"
+      />
       <Hero>
         <Label>Our Story</Label>
         <Title>Irek's Apiary</Title>

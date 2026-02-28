@@ -84,10 +84,16 @@ export function CartProvider({ children }) {
   const totals = useMemo(() => {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
-    const shippingProgress = Math.min(subtotal / FREE_SHIPPING_THRESHOLD, 1);
+    const shippableTotal = cart
+      .filter(item => !item.pickup)
+      .reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const hasShippableItems = shippableTotal > 0;
+    const freeShipping = hasShippableItems && shippableTotal >= FREE_SHIPPING_THRESHOLD;
+    const shippingProgress = hasShippableItems
+      ? Math.min(shippableTotal / FREE_SHIPPING_THRESHOLD, 1)
+      : 0;
 
-    return { subtotal, itemCount, freeShipping, shippingProgress };
+    return { subtotal, itemCount, freeShipping, shippingProgress, hasShippableItems, shippableTotal };
   }, [cart]);
 
   const proceedToCheckout = useCallback(async () => {
@@ -98,7 +104,7 @@ export function CartProvider({ children }) {
 
     const invalid = cart.filter(item => !item.stripePriceId);
     if (invalid.length > 0) {
-      setCheckoutError('Some items cannot be checked out. Please remove them and try again.');
+      setCheckoutError('Checkout is not available yet. We\'re finishing setup.');
       return;
     }
 

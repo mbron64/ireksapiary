@@ -25,7 +25,7 @@ export default function CartDrawer() {
     return () => { document.body.style.overflow = ''; };
   }, [isCartOpen]);
 
-  const remaining = FREE_SHIPPING_THRESHOLD - totals.subtotal;
+  const remaining = FREE_SHIPPING_THRESHOLD - totals.shippableTotal;
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function CartDrawer() {
           <CloseBtn onClick={closeCart} aria-label="Close cart"><X size={20} /></CloseBtn>
         </DrawerHeader>
 
-        {!totals.freeShipping && totals.subtotal > 0 && (
+        {totals.hasShippableItems && !totals.freeShipping && (
           <ShippingBar>
             <ShippingText>
               {remaining > 0
@@ -49,7 +49,7 @@ export default function CartDrawer() {
           </ShippingBar>
         )}
 
-        {totals.freeShipping && totals.subtotal > 0 && (
+        {totals.freeShipping && (
           <ShippingBar $success>
             <ShippingText>Free shipping unlocked!</ShippingText>
           </ShippingBar>

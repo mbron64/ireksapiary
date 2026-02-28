@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
+import SEO from '../shared/SEO';
 import JarCarousel from './JarCarousel';
 import { useCart } from '../../context/CartContext';
 import { PRODUCTS, calculatePrice, SUBSCRIPTION_DISCOUNT } from '../../config/products';
@@ -40,6 +41,30 @@ export default function ProductDetail() {
 
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
+      <SEO
+        title={`${product.name} | Raw Local Honey`}
+        description={product.description}
+        path={`/products/${slug}`}
+        image={product.images[0]}
+        type="product"
+      >
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": product.name,
+          "description": product.description,
+          "image": `https://ireksapiary.com${product.images[0]}`,
+          "brand": { "@type": "Brand", "name": "Irek's Apiary" },
+          "offers": Object.values(product.variants).map(v => ({
+            "@type": "Offer",
+            "price": v.price.toFixed(2),
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": `https://ireksapiary.com/products/${slug}`,
+            "name": v.size,
+          })),
+        })}</script>
+      </SEO>
       <HeroGrid>
         <ImageCol>
           <JarCarousel images={product.images} alt={product.name} />
