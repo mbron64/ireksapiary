@@ -1,240 +1,190 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import AnnouncementBar from '../shared/AnnouncementBar';
-import SharedHeader from '../shared/SharedHeader';
-import NewsletterFooter from '../shared/NewsletterFooter';
-import Footer from '../shared/Footer';
+import { ChevronDown, ChevronUp } from 'react-feather';
+import PageWrapper from '../Layout/PageWrapper';
 
-const PageContainer = styled.div`
-  background-color: #f4e8c4;
-  min-height: 100vh;
-  color: #3b2f20;
-  font-family: 'Crimson Text', 'Times New Roman', serif;
-`;
+const POSTS = [
+  {
+    id: 1,
+    title: 'Why Bees Matter More Than You Think',
+    date: 'October 2024',
+    excerpt: 'Bees pollinate roughly one-third of the food we eat. Here\'s why their decline matters, and what you can do.',
+    body: `Honeybees are responsible for pollinating about 80% of all flowering plants, including roughly one-third of every bite of food you eat. From almonds to blueberries, the list of crops that depend on bee pollination is staggering.
 
-const Content = styled.main`
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-`;
+But bee populations have been declining for decades due to pesticides, habitat loss, and climate change. Colony Collapse Disorder alone has wiped out an estimated 40% of managed honeybee colonies in the US since 2006.
 
-const Title = styled.h2`
-  font-family: 'EB Garamond', serif;
-  font-size: 3rem;
-  margin-bottom: 3rem;
-  font-weight: 500;
-  text-align: center;
-`;
+What can you do? Plant pollinator-friendly flowers (lavender, sunflowers, clover). Avoid pesticides in your garden. Support local beekeepers who practice sustainable methods. Every small action compounds.`,
+  },
+  {
+    id: 2,
+    title: 'Raw Honey vs. Store-Bought: What\'s Actually Different?',
+    date: 'September 2024',
+    excerpt: 'That bear-shaped bottle on the shelf has been ultra-filtered and pasteurized. Here\'s what that really means for your honey.',
+    body: `Most commercial honey is heated to 150°F+ and ultra-filtered to make it clear and shelf-stable. The process removes pollen (which is how you trace honey's origin), destroys beneficial enzymes, and kills the natural yeasts that give raw honey its complex flavor.
 
-const BlogGrid = styled.div`
-  display: grid;
-  gap: 2rem;
-`;
+Raw honey, by contrast, is simply strained to remove beeswax and large particles, then bottled. Everything else (the pollen, propolis, enzymes, and antioxidants) stays in.
 
-const BlogPost = styled.article`
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 1rem;
-  padding: 2rem;
-  transition: all 0.3s;
-  border: 2px solid transparent;
-  
-  &:hover {
-    transform: translateY(-5px);
-    border-color: #3b2f20;
-  }
-`;
+This is why raw honey crystallizes over time (a sign of quality, not spoilage) and why it tastes noticeably richer and more complex than the processed stuff.`,
+  },
+  {
+    id: 3,
+    title: 'A Guide to Seasonal Honey Varieties',
+    date: 'August 2024',
+    excerpt: 'Our Spring honey tastes nothing like our Fall harvest. Here\'s how the season shapes what ends up in your jar.',
+    body: `Just like wine has terroir, honey has its own version. The flavor changes based on what the bees are foraging. Our Spring harvest comes from apple blossoms, cherry trees, and early wildflowers, producing a light, delicate honey with a clean finish.
 
-const PostDate = styled.div`
-  font-size: 0.9rem;
-  color: #6e6655;
-  margin-bottom: 0.5rem;
-`;
+By Summer, the bees are deep into goldenrod, clover, and black-eyed Susans, creating a fuller, more complex honey with warm floral notes. It's our most versatile harvest.
 
-const PostTitle = styled.h3`
-  font-family: 'EB Garamond', serif;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-`;
+Fall honey is the boldest. The bees are foraging on late-season plants and the honey develops a rich, almost molasses-like depth with notes of dried fruit. It's our most sought-after harvest, and quantities are always limited.
 
-const PostExcerpt = styled.p`
-  line-height: 1.6;
-  margin-bottom: 1rem;
-`;
+The lesson: don't just buy "honey." Pay attention to the season, the source, and the beekeeper. The differences are real.`,
+  },
+  {
+    id: 4,
+    title: 'Backyard Beekeeping: What I Wish I\'d Known',
+    date: 'July 2024',
+    excerpt: 'I started with one hive in 2012. Here are the lessons that took me years to learn.',
+    body: `Starting a hive is easy. Keeping one alive through winter is the hard part. Here's what I've learned over 12 years:
 
-const PostContent = styled.div`
-  line-height: 1.7;
-  margin: 1.5rem 0;
-  font-size: 1.05rem;
-  
-  p {
-    margin-bottom: 1rem;
-  }
-  
-  h4 {
-    margin: 1.5rem 0 0.75rem;
-    font-size: 1.2rem;
-  }
-`;
+First, location matters enormously. Bees need morning sun, afternoon shade, and a windbreak in winter. Get this wrong and you'll lose colonies.
 
-const ReadMore = styled.button`
-  background: transparent;
-  color: #3b2f20;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 2px solid #3b2f20;
-  padding: 0.25rem 0;
-  font-family: 'Crimson Text', serif;
-  font-size: 1rem;
-  transition: all 0.2s;
-  
-  &:hover {
-    color: #b38728;
-    border-bottom-color: #b38728;
-  }
-`;
+Second, don't harvest too much. Your first year, the bees need their honey more than you do. Leave them enough to survive the winter, at least 60 pounds in our climate.
 
-const CollapseButton = styled(ReadMore)`
-  margin-top: 1rem;
-`;
+Third, find a mentor. Books and YouTube are great, but nothing replaces having an experienced beekeeper look at your hive and say "that's not right." Local bee clubs are invaluable.
 
-function Blog() {
-  const [expandedPost, setExpandedPost] = useState(null);
+Finally, be patient. A healthy, productive colony takes time to build. Rush it and you'll set yourself back.`,
+  },
+];
 
-  const blogPosts = [
-    {
-      id: 1,
-      date: 'October 1, 2025',
-      title: 'The Secret Life of Honey Bees',
-      excerpt: 'Ever wondered what happens inside a beehive? Discover the fascinating social structure and daily activities of these incredible pollinators.',
-      content: `
-        <p>Inside every beehive exists a complex society that rivals any human organization. With thousands of individuals working in perfect harmony, the hive operates like a well-oiled machine—or should we say, a well-honeyed machine?</p>
-        
-        <h4>The Queen's Role</h4>
-        <p>The queen bee is the mother of the entire colony, laying up to 2,000 eggs per day during peak season. But she's not a ruler in the traditional sense—she's more like the heart of the hive, keeping the whole system alive and thriving.</p>
-        
-        <h4>Worker Bees: The True Heroes</h4>
-        <p>Female worker bees do everything: nursing, cleaning, building comb, guarding the entrance, and of course, foraging for nectar and pollen. Their entire lives are dedicated to the colony's success.</p>
-        
-        <h4>The Waggle Dance</h4>
-        <p>When a forager bee finds a great patch of flowers, she performs a "waggle dance" to communicate the exact location to her sisters. The angle of the dance relative to the sun tells direction, and the duration tells distance. It's basically GPS, but way cuter!</p>
-        
-        <p>Next time you drizzle honey on your toast, remember: thousands of bees worked together to create that golden goodness.</p>
-      `
-    },
-    {
-      id: 2,
-      date: 'September 15, 2025',
-      title: 'Raw vs. Processed: What\'s the Difference?',
-      excerpt: 'Not all honey is created equal. Learn why raw, unfiltered honey is worth seeking out and what you might be missing in store-bought varieties.',
-      content: `
-        <p>Walk down any grocery store aisle and you'll see dozens of honey bottles. But here's the thing: most of that honey has been heavily processed, losing much of what makes honey special in the first place.</p>
-        
-        <h4>What is Raw Honey?</h4>
-        <p>Raw honey is exactly what it sounds like—honey straight from the hive with minimal processing. We only strain out beeswax and bee parts, leaving all the good stuff intact: pollen, enzymes, antioxidants, and natural flavors.</p>
-        
-        <h4>The Processing Problem</h4>
-        <p>Commercial honey is often heated to high temperatures (above 160°F) to make it easier to filter and bottle. This destroys beneficial enzymes, reduces antioxidant content, and eliminates the subtle flavor notes that make each honey unique.</p>
-        
-        <h4>Ultra-Filtration</h4>
-        <p>Many producers ultra-filter their honey to remove all pollen and create a crystal-clear product. But pollen is what gives honey its distinctive character and health benefits! Plus, removing pollen makes it impossible to trace the honey's origin.</p>
-        
-        <h4>Why We Keep It Raw</h4>
-        <p>At Irek's Apiary, we never heat our honey above 95°F (hive temperature). We never ultra-filter. What you get is honey as nature intended—thick, flavorful, and full of beneficial compounds. It might crystallize over time, but that's actually a sign of quality!</p>
-        
-        <p>Choose raw. Choose real. Choose honey that actually tastes like something.</p>
-      `
-    },
-    {
-      id: 3,
-      date: 'September 1, 2025',
-      title: 'Seasonal Honey: A Taste of Time',
-      excerpt: 'Each season brings different flowers, and each flower brings unique flavors. Explore how our honey changes throughout the year.',
-      content: `
-        <p>Unlike most food products, honey is a true expression of time and place. The flavor, color, and aroma of honey depend entirely on which flowers were blooming when the bees were foraging.</p>
-        
-        <h4>Spring Honey</h4>
-        <p>Spring brings fruit tree blossoms and early wildflowers. Spring honey tends to be lighter in color and more delicate in flavor, with fruity and floral notes. It's perfect for drizzling over yogurt or fresh fruit.</p>
-        
-        <h4>Summer Honey</h4>
-        <p>This is peak wildflower season! Summer honey is typically darker, more robust, and packed with complex flavors. Our Wildflower honey comes from this abundant season when hundreds of flower species are in bloom.</p>
-        
-        <h4>Fall Honey</h4>
-        <p>Late-season flowers like asters and goldenrod produce honey with deeper, almost molasses-like notes. Fall honey is richer and more intense—perfect for baking and cooking.</p>
-        
-        <h4>Why This Matters</h4>
-        <p>When you buy honey from a single source and season, you're getting a snapshot of that specific time and place. It's terroir, but for honey. Each batch tells the story of that season's blooms.</p>
-        
-        <p>Commercial blended honey tastes the same year-round because it mixes honey from multiple sources and seasons. We embrace the natural variation—it's what makes honey interesting!</p>
-      `
-    },
-    {
-      id: 4,
-      date: 'August 20, 2025',
-      title: 'Sustainable Beekeeping Practices',
-      excerpt: 'How we maintain healthy colonies while harvesting responsibly. A look at the ethical considerations behind every jar.',
-      content: `
-        <p>At Irek's Apiary, we believe that healthy bees make the best honey. Our beekeeping practices prioritize colony wellbeing above all else—because what's good for the bees is good for everyone.</p>
-        
-        <h4>Leaving Enough for the Bees</h4>
-        <p>We never take all the honey from a hive. Bees need their honey stores to survive, especially during winter. We only harvest surplus honey, ensuring each colony has plenty for themselves.</p>
-        
-        <h4>Chemical-Free Approach</h4>
-        <p>We manage pests and diseases without synthetic chemicals. Instead, we use integrated pest management, strong genetics, and proper hive maintenance to keep our colonies healthy naturally.</p>
-        
-        <h4>Habitat Preservation</h4>
-        <p>Bees need diverse, pesticide-free forage. We work with local landowners to preserve wildflower habitats and avoid areas with intensive pesticide use. Every jar of our honey represents acres of protected wildflowers.</p>
-        
-        <h4>Ethical Harvesting</h4>
-        <p>We harvest honey at the right times, in the right amounts, with minimal stress to the bees. Our methods ensure that beekeeping remains sustainable for generations to come.</p>
-        
-        <p>When you choose Irek's Apiary, you're supporting beekeeping that puts bees first. Because in the end, happy bees mean better honey—and a healthier planet.</p>
-      `
-    }
-  ];
+export default function Blog() {
+  const [expanded, setExpanded] = useState(null);
 
-  const togglePost = (postId) => {
-    setExpandedPost(expandedPost === postId ? null : postId);
-  };
+  const toggle = (id) => setExpanded(prev => (prev === id ? null : id));
 
   return (
-    <PageContainer>
-      <AnnouncementBar message="📚 NEW POST: THE SECRET LIFE OF HONEY BEES" />
-      <SharedHeader />
+    <PageWrapper>
+      <Header>
+        <Label>From the Hive</Label>
+        <Title>Blog</Title>
+        <Subtitle>
+          Stories about bees, honey, and the craft of beekeeping.
+        </Subtitle>
+      </Header>
 
-      <Content>
-        <Title>The Buzz: Our Blog</Title>
-
-        <BlogGrid>
-          {blogPosts.map((post) => (
-            <BlogPost key={post.id}>
-              <PostDate>{post.date}</PostDate>
-              <PostTitle>{post.title}</PostTitle>
-              <PostExcerpt>{post.excerpt}</PostExcerpt>
-              
-              {expandedPost === post.id && (
-                <PostContent dangerouslySetInnerHTML={{ __html: post.content }} />
-              )}
-              
-              {expandedPost !== post.id ? (
-                <ReadMore onClick={() => togglePost(post.id)}>
-                  Read Full Article →
-                </ReadMore>
-              ) : (
-                <CollapseButton onClick={() => togglePost(post.id)}>
-                  ← Show Less
-                </CollapseButton>
-              )}
-            </BlogPost>
-          ))}
-        </BlogGrid>
-      </Content>
-
-      <NewsletterFooter />
-      <Footer />
-    </PageContainer>
+      <PostList>
+        {POSTS.map(post => (
+          <Post key={post.id}>
+            <PostHeader onClick={() => toggle(post.id)} role="button" tabIndex={0}>
+              <PostMeta>
+                <PostDate>{post.date}</PostDate>
+                <PostTitle>{post.title}</PostTitle>
+                <PostExcerpt>{post.excerpt}</PostExcerpt>
+              </PostMeta>
+              <ToggleIcon>
+                {expanded === post.id ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </ToggleIcon>
+            </PostHeader>
+            {expanded === post.id && (
+              <PostBody>
+                {post.body.split('\n\n').map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </PostBody>
+            )}
+          </Post>
+        ))}
+      </PostList>
+    </PageWrapper>
   );
 }
 
-export default Blog;
+const Header = styled.div`
+  text-align: center;
+  padding: ${({ theme }) => theme.space['3xl']} ${({ theme }) => theme.space.xl}
+           ${({ theme }) => theme.space.xl};
+  max-width: ${({ theme }) => theme.layout.maxWidth};
+  margin: 0 auto;
+`;
+
+const Label = styled.p`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: ${({ theme }) => theme.colors.gold};
+  margin-bottom: ${({ theme }) => theme.space.sm};
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2.5rem, 5vw, ${({ theme }) => theme.fontSizes['4xl']});
+  margin-bottom: ${({ theme }) => theme.space.md};
+`;
+
+const Subtitle = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  opacity: 0.7;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.5;
+`;
+
+const PostList = styled.div`
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 ${({ theme }) => theme.space.xl} ${({ theme }) => theme.space['4xl']};
+`;
+
+const Post = styled.article`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.creamDark};
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: ${({ theme }) => theme.space.md};
+  padding: ${({ theme }) => theme.space.xl} 0;
+  cursor: pointer;
+
+  &:hover { opacity: 0.85; }
+`;
+
+const PostMeta = styled.div``;
+
+const PostDate = styled.p`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.brownMedium};
+  margin-bottom: ${({ theme }) => theme.space.xs};
+`;
+
+const PostTitle = styled.h2`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  margin-bottom: ${({ theme }) => theme.space.sm};
+`;
+
+const PostExcerpt = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  opacity: 0.65;
+  line-height: 1.5;
+`;
+
+const ToggleIcon = styled.div`
+  flex-shrink: 0;
+  margin-top: ${({ theme }) => theme.space.md};
+  color: ${({ theme }) => theme.colors.brownMedium};
+`;
+
+const PostBody = styled.div`
+  padding: 0 0 ${({ theme }) => theme.space.xl};
+  max-width: 620px;
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    line-height: 1.7;
+    margin-bottom: ${({ theme }) => theme.space.md};
+    opacity: 0.85;
+
+    &:last-child { margin-bottom: 0; }
+  }
+`;

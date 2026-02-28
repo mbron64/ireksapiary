@@ -1,173 +1,142 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { createCheckout, redirectToCheckout } from '../utils/shopify';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import { createCheckoutSession, redirectToCheckout } from '../utils/stripe';
+import { FREE_SHIPPING_THRESHOLD } from '../config/products';
 
-// Create the cart context
-export const CartContext = createContext();
+const CartContext = createContext();
 
-// Custom hook to use the cart context
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  return ctx;
+};
 
-export const CartProvider = ({ children }) => {
-  // Initialize cart state from localStorage if available
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem('honeyCart');
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-  
+function loadCart() {
+  try {
+    const raw = localStorage.getItem('honeyCart');
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    localStorage.removeItem('honeyCart');
+    return [];
+  }
+}
+
+export function CartProvider({ children }) {
+  const [cart, setCart] = useState(loadCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartAnimation, setCartAnimation] = useState('');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState(null);
-  
-  // Save cart to localStorage whenever it changes
+
   useEffect(() => {
-    localStorage.setItem('honeyCart', JSON.stringify(cart));
+    try {
+      localStorage.setItem('honeyCart', JSON.stringify(cart));
+    } catch { /* quota exceeded — silent fail */ }
   }, [cart]);
-  
-  // Add item to cart with animation
-  const addToCart = (product, quantity = 1) => {
-    // Validate product has required fields
-    if (!product || !product.id || !product.shopifyVariantId) {
-      console.error('Invalid product:', product);
-      setCheckoutError('Unable to add product. Please refresh and try again.');
+
+  const addToCart = useCallback((product, quantity = 1) => {
+    if (!product?.id || !product?.variant) {
+      setCheckoutError('Unable to add this item. Please try again.');
       return;
     }
 
-    setCart(prevCart => {
-      // Check if item already exists in cart
-      const existingItemIndex = prevCart.findIndex(
-        item => item.id === product.id && item.variant === product.variant
-      );
-      
-      if (existingItemIndex >= 0) {
-        // Update quantity if item exists (immutably)
-        return prevCart.map((item, index) => 
-          index === existingItemIndex 
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+    setCart(prev => {
+      const key = `${product.id}::${product.variant}`;
+      const idx = prev.findIndex(i => `${i.id}::${i.variant}` === key);
+
+      if (idx >= 0) {
+        return prev.map((item, i) =>
+          i === idx ? { ...item, quantity: item.quantity + quantity } : item
         );
-      } else {
-        // Add new item (immutably)
-        return [...prevCart, { ...product, quantity }];
       }
+      return [...prev, { ...product, quantity }];
     });
-    
+
     setIsCartOpen(true);
-    
-    // Trigger animation
-    setCartAnimation('added');
-    setTimeout(() => setCartAnimation(''), 1000);
-  };
-  
-  // Remove item from cart
-  const removeFromCart = (productId, variant) => {
-    setCart(prevCart => 
-      prevCart.filter(
-        item => !(item.id === productId && item.variant === variant)
+    setCheckoutError(null);
+  }, []);
+
+  const removeFromCart = useCallback((productId, variant) => {
+    setCart(prev => prev.filter(
+      item => !(item.id === productId && item.variant === variant)
+    ));
+  }, []);
+
+  const updateQuantity = useCallback((productId, variant, quantity) => {
+    if (quantity < 1) {
+      removeFromCart(productId, variant);
+      return;
+    }
+    setCart(prev =>
+      prev.map(item =>
+        item.id === productId && item.variant === variant
+          ? { ...item, quantity }
+          : item
       )
     );
-    
-    setCartAnimation('removed');
-    setTimeout(() => setCartAnimation(''), 1000);
-  };
-  
-  // Update item quantity
-  const updateQuantity = (productId, variant, quantity) => {
-    if (quantity < 1) return;
-    
-    setCart(prevCart =>
-      prevCart.map(item => {
-        if (item.id === productId && item.variant === variant) {
-          return { ...item, quantity };
-        }
-        return item;
-      })
-    );
-  };
-  
-  // Calculate cart totals
-  const getCartTotals = () => {
-    return cart.reduce(
-      (totals, item) => {
-        const itemTotal = item.price * item.quantity;
-        
-        return {
-          subtotal: totals.subtotal + itemTotal,
-          itemCount: totals.itemCount + item.quantity,
-        };
-      },
-      { subtotal: 0, itemCount: 0 }
-    );
-  };
-  
-  // Toggle cart open/closed
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-  
-  // Clear cart
-  const clearCart = () => {
-    setCart([]);
-  };
-  
-  // Initiate Shopify checkout process
-  const proceedToCheckout = async () => {
+  }, [removeFromCart]);
+
+  const clearCart = useCallback(() => setCart([]), []);
+  const toggleCart = useCallback(() => setIsCartOpen(prev => !prev), []);
+  const openCart = useCallback(() => setIsCartOpen(true), []);
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
+
+  const totals = useMemo(() => {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+    const shippingProgress = Math.min(subtotal / FREE_SHIPPING_THRESHOLD, 1);
+
+    return { subtotal, itemCount, freeShipping, shippingProgress };
+  }, [cart]);
+
+  const proceedToCheckout = useCallback(async () => {
     if (cart.length === 0) {
-      setCheckoutError("Your cart is empty");
+      setCheckoutError('Your cart is empty');
       return;
     }
 
-    // Validate all cart items have Shopify variant IDs
-    const invalidItems = cart.filter(item => !item.shopifyVariantId);
-    if (invalidItems.length > 0) {
-      setCheckoutError("Some items in your cart are invalid. Please refresh the page.");
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Invalid cart items:', invalidItems);
-      }
+    const invalid = cart.filter(item => !item.stripePriceId);
+    if (invalid.length > 0) {
+      setCheckoutError('Some items cannot be checked out. Please remove them and try again.');
       return;
     }
-    
+
     try {
       setIsCheckingOut(true);
       setCheckoutError(null);
-      
-      // Create checkout session with validated cart items
-      const checkout = await createCheckout(cart);
-      
-      // Redirect to Shopify checkout
-      redirectToCheckout(checkout.webUrl);
-      
-      // Optional: Clear cart after successful checkout creation
-      // clearCart();
+      const url = await createCheckoutSession(cart);
+      redirectToCheckout(url);
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error("Error proceeding to checkout:", error);
-      }
-      setCheckoutError(error.message || "Unable to process checkout. Please try again.");
+      setCheckoutError(error.message || 'Unable to process checkout. Please try again.');
     } finally {
       setIsCheckingOut(false);
     }
-  };
-  
-  // Prepare the context value
-  const contextValue = {
+  }, [cart]);
+
+  const value = useMemo(() => ({
     cart,
     isCartOpen,
-    cartAnimation,
     isCheckingOut,
     checkoutError,
+    totals,
     addToCart,
     removeFromCart,
     updateQuantity,
-    getCartTotals,
-    toggleCart,
     clearCart,
-    proceedToCheckout
-  };
-  
+    toggleCart,
+    openCart,
+    closeCart,
+    proceedToCheckout,
+  }), [
+    cart, isCartOpen, isCheckingOut, checkoutError, totals,
+    addToCart, removeFromCart, updateQuantity, clearCart,
+    toggleCart, openCart, closeCart, proceedToCheckout,
+  ]);
+
   return (
-    <CartContext.Provider value={contextValue}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
-}; 
+}

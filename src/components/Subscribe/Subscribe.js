@@ -1,355 +1,162 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import AnnouncementBar from '../shared/AnnouncementBar';
-import SharedHeader from '../shared/SharedHeader';
-import NewsletterFooter from '../shared/NewsletterFooter';
-import Footer from '../shared/Footer';
+import styled from 'styled-components';
+import PageWrapper from '../Layout/PageWrapper';
+import { SUBSCRIPTION_DISCOUNT } from '../../config/products';
 
-const PageContainer = styled.div`
-  background-color: #f4e8c4;
-  min-height: 100vh;
-  color: #3b2f20;
-  font-family: 'Crimson Text', 'Times New Roman', serif;
-`;
+const BENEFITS = [
+  { title: 'Save Every Time', desc: `${Math.round(SUBSCRIPTION_DISCOUNT * 100)}% off every order, on top of any quantity discounts.` },
+  { title: 'Never Run Out', desc: 'Fresh honey delivered monthly, right to your door.' },
+  { title: 'Cancel Anytime', desc: 'No contracts, no commitments. Pause or cancel whenever you want.' },
+  { title: 'Free Shipping', desc: 'Every subscription order ships free, no minimum.' },
+];
 
-const Hero = styled.div`
-  background: #3b2f20;
-  color: #f4e8c4;
-  padding: 5rem 2rem;
+const FAQ = [
+  { q: 'How does the subscription work?', a: 'Pick your honey and size, check the "Subscribe & Save" box, and we\'ll deliver it monthly. You\'ll be charged each month when your order ships.' },
+  { q: 'Can I change my order?', a: 'Yes, you can swap products, change quantities, or update your delivery address anytime from your account.' },
+  { q: 'What if I need to skip a month?', a: 'No problem. You can pause your subscription for as long as you need and resume when you\'re ready.' },
+  { q: 'Is there a minimum commitment?', a: 'None at all. You can cancel after your first delivery if it\'s not for you.' },
+];
+
+export default function Subscribe() {
+  return (
+    <PageWrapper>
+      <Hero>
+        <Label>Subscribe & Save</Label>
+        <Title>Honey, On Repeat</Title>
+        <Subtitle>
+          Set it and forget it. Fresh raw honey delivered monthly
+          with {Math.round(SUBSCRIPTION_DISCOUNT * 100)}% off every order.
+        </Subtitle>
+        <CTA to="/shop">Start Your Subscription</CTA>
+      </Hero>
+
+      <Section>
+        <SectionTitle>Why Subscribe?</SectionTitle>
+        <BenefitsGrid>
+          {BENEFITS.map(b => (
+            <Benefit key={b.title}>
+              <BenefitTitle>{b.title}</BenefitTitle>
+              <BenefitDesc>{b.desc}</BenefitDesc>
+            </Benefit>
+          ))}
+        </BenefitsGrid>
+      </Section>
+
+      <FAQSection>
+        <SectionTitle>Common Questions</SectionTitle>
+        <FAQList>
+          {FAQ.map(item => (
+            <FAQItem key={item.q}>
+              <FAQQuestion>{item.q}</FAQQuestion>
+              <FAQAnswer>{item.a}</FAQAnswer>
+            </FAQItem>
+          ))}
+        </FAQList>
+      </FAQSection>
+    </PageWrapper>
+  );
+}
+
+const Hero = styled.section`
   text-align: center;
-`;
-
-const HeroTitle = styled.h1`
-  font-family: 'EB Garamond', serif;
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-  line-height: 1.1;
-  
-  @media (max-width: 768px) {
-    font-size: 3rem;
-  }
-`;
-
-const HeroSubtitle = styled.p`
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-  opacity: 0.9;
-`;
-
-const HeroButton = styled(Link)`
-  display: inline-block;
-  background: #f4e8c4;
-  color: #3b2f20;
-  padding: 1.25rem 3rem;
-  border-radius: 3rem;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.2rem;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const Content = styled.main`
-  max-width: 1000px;
+  padding: ${({ theme }) => theme.space['3xl']} ${({ theme }) => theme.space.xl}
+           ${({ theme }) => theme.space['2xl']};
+  max-width: ${({ theme }) => theme.layout.maxWidth};
   margin: 0 auto;
-  padding: 4rem 2rem;
+`;
+
+const Label = styled.p`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: ${({ theme }) => theme.colors.gold};
+  margin-bottom: ${({ theme }) => theme.space.sm};
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2.5rem, 5vw, ${({ theme }) => theme.fontSizes['4xl']});
+  margin-bottom: ${({ theme }) => theme.space.md};
+`;
+
+const Subtitle = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  opacity: 0.7;
+  max-width: 520px;
+  margin: 0 auto ${({ theme }) => theme.space.xl};
+  line-height: 1.5;
+`;
+
+const CTA = styled(Link)`
+  display: inline-block;
+  padding: ${({ theme }) => theme.space.md} ${({ theme }) => theme.space.xl};
+  background: ${({ theme }) => theme.colors.brown};
+  color: ${({ theme }) => theme.colors.cream};
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  border-radius: ${({ theme }) => theme.radii.sm};
+  transition: opacity ${({ theme }) => theme.transitions.fast};
+  &:hover { opacity: 0.85; }
+`;
+
+const Section = styled.section`
+  max-width: ${({ theme }) => theme.layout.maxWidth};
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.space['3xl']} ${({ theme }) => theme.space.xl};
 `;
 
 const SectionTitle = styled.h2`
-  font-family: 'EB Garamond', serif;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, ${({ theme }) => theme.fontSizes['3xl']});
   text-align: center;
+  margin-bottom: ${({ theme }) => theme.space['2xl']};
 `;
 
 const BenefitsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 4rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: ${({ theme }) => theme.space.xl};
 `;
 
 const Benefit = styled.div`
   text-align: center;
-  padding: 2.5rem 2rem;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 1rem;
-  transition: transform 0.3s;
-  border: 2px solid transparent;
-  
-  &:hover {
-    transform: translateY(-5px);
-    border-color: #3b2f20;
-  }
-`;
-
-const BenefitIcon = styled.div`
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
+  padding: ${({ theme }) => theme.space.xl};
 `;
 
 const BenefitTitle = styled.h3`
-  font-size: 1.4rem;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  margin-bottom: ${({ theme }) => theme.space.sm};
 `;
 
-const ComparisonSection = styled.div`
-  background: rgba(179, 135, 40, 0.08);
-  padding: 4rem 2rem;
-  margin: 3rem 0;
-  border-radius: 1rem;
+const BenefitDesc = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  line-height: 1.6;
+  opacity: 0.75;
 `;
 
-const ComparisonGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 800px;
-  margin: 2rem auto 0;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+const FAQSection = styled.section`
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 ${({ theme }) => theme.space.xl} ${({ theme }) => theme.space['4xl']};
 `;
 
-const ComparisonColumn = styled.div`
-  background: ${props => props.$highlight ? '#3b2f20' : 'rgba(255, 255, 255, 0.5)'};
-  color: ${props => props.$highlight ? '#f4e8c4' : '#3b2f20'};
-  padding: 2rem;
-  border-radius: 1rem;
-  border: 2px solid ${props => props.$highlight ? '#b38728' : 'transparent'};
-  
-  h4 {
-    font-family: 'EB Garamond', serif;
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-  }
-  
-  li {
-    padding: 0.75rem 0;
-    border-bottom: 1px dashed ${props => props.$highlight ? 'rgba(244, 232, 196, 0.3)' : '#d0c8b5'};
-    
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    &:before {
-      content: '${props => props.$highlight ? '✓' : '○'}';
-      margin-right: 0.75rem;
-      font-weight: bold;
-      color: ${props => props.$highlight ? '#b38728' : '#6e6655'};
-    }
-  }
-`;
-
-const FAQ = styled.div`
-  margin-top: 3rem;
+const FAQList = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const FAQItem = styled.div`
-  background: rgba(255, 255, 255, 0.4);
-  padding: 1.5rem 2rem;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  border-left: 4px solid #b38728;
+  padding: ${({ theme }) => theme.space.xl} 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.creamDark};
 `;
 
-const Question = styled.h4`
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
+const FAQQuestion = styled.h3`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  margin-bottom: ${({ theme }) => theme.space.sm};
 `;
 
-const Answer = styled.p`
-  line-height: 1.7;
-  color: #584a38;
-  font-size: 1.05rem;
+const FAQAnswer = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  line-height: 1.6;
+  opacity: 0.75;
 `;
-
-const Testimonial = styled.div`
-  background: rgba(255, 255, 255, 0.4);
-  padding: 2.5rem;
-  border-radius: 1rem;
-  font-style: italic;
-  font-size: 1.2rem;
-  text-align: center;
-  max-width: 700px;
-  margin: 3rem auto;
-  border-top: 3px solid #b38728;
-  
-  &:before {
-    content: '"';
-    font-size: 3rem;
-    color: #b38728;
-    line-height: 0;
-  }
-  
-  cite {
-    display: block;
-    margin-top: 1rem;
-    font-style: normal;
-    font-size: 1rem;
-    color: #584a38;
-    font-weight: 500;
-  }
-`;
-
-function Subscribe() {
-  return (
-    <PageContainer>
-      <AnnouncementBar 
-        message="💰 SUBSCRIBERS SAVE AN EXTRA 5% ON EVERY ORDER"
-        bgColor="#b38728"
-        textColor="#fff"
-      />
-      <SharedHeader />
-
-      <Hero>
-        <HeroTitle>Subscribe & Save</HeroTitle>
-        <HeroSubtitle>Never run out. Always save. Skip or cancel anytime.</HeroSubtitle>
-        <HeroButton to="/products/wildflower">Start a Subscription</HeroButton>
-      </Hero>
-
-      <Content>
-        <SectionTitle>Why Subscribe?</SectionTitle>
-
-        <BenefitsGrid>
-          <Benefit>
-            <BenefitIcon>💰</BenefitIcon>
-            <BenefitTitle>Save Big</BenefitTitle>
-            <p>Extra 5% off every order, stacks with quantity discounts up to 22% total savings</p>
-          </Benefit>
-
-          <Benefit>
-            <BenefitIcon>📦</BenefitIcon>
-            <BenefitTitle>Never Run Out</BenefitTitle>
-            <p>Set your frequency (1, 2, or 3 months) and we'll deliver fresh honey to your door</p>
-          </Benefit>
-
-          <Benefit>
-            <BenefitIcon>🔄</BenefitIcon>
-            <BenefitTitle>Total Flexibility</BenefitTitle>
-            <p>Skip, pause, swap flavors, or cancel anytime. No commitments, no penalties</p>
-          </Benefit>
-        </BenefitsGrid>
-
-        <ComparisonSection>
-          <h3 style={{ 
-            textAlign: 'center', 
-            fontSize: '2rem', 
-            marginBottom: '1rem',
-            fontFamily: 'EB Garamond, serif'
-          }}>
-            Subscribe vs. One-Time
-          </h3>
-          <p style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.1rem', color: '#584a38' }}>
-            Why subscribers love us
-          </p>
-          <ComparisonGrid>
-            <ComparisonColumn>
-              <h4>One-Time Purchase</h4>
-              <ul>
-                <li>Standard pricing</li>
-                <li>Pay shipping on small orders</li>
-                <li>Remember to reorder</li>
-                <li>Risk running out</li>
-              </ul>
-            </ComparisonColumn>
-            
-            <ComparisonColumn $highlight>
-              <h4>Subscribe & Save</h4>
-              <ul>
-                <li>Extra 5% off every order</li>
-                <li>Free shipping on 6+ jars</li>
-                <li>Automatic delivery</li>
-                <li>Never run out</li>
-                <li>Skip or cancel anytime</li>
-                <li>Swap flavors anytime</li>
-              </ul>
-            </ComparisonColumn>
-          </ComparisonGrid>
-        </ComparisonSection>
-
-        <Testimonial>
-          I've been subscribed for 6 months and it's the best decision ever. I get my Wildflower honey every 2 months, and I've never had to think about running out. Plus the savings really add up!
-          <cite>— Michael R., San Francisco</cite>
-        </Testimonial>
-
-        <FAQ>
-          <SectionTitle>Common Questions</SectionTitle>
-
-          <FAQItem>
-            <Question>How does a subscription work?</Question>
-            <Answer>
-              Choose your honey, select "Subscribe & Save," and pick your delivery frequency (every 1, 2, or 3 months). 
-              We'll automatically deliver fresh honey on your schedule. No commitments required.
-            </Answer>
-          </FAQItem>
-
-          <FAQItem>
-            <Question>Can I skip or cancel?</Question>
-            <Answer>
-              Absolutely! Skip deliveries, change frequency, swap products, or cancel anytime with zero fees or penalties. 
-              Manage everything in your account dashboard.
-            </Answer>
-          </FAQItem>
-
-          <FAQItem>
-            <Question>How much do I actually save?</Question>
-            <Answer>
-              Subscribers get an extra 5% off every order, which stacks with our quantity discounts (up to 17%). 
-              That means up to 22% total savings! Plus free shipping on 6+ jars.
-            </Answer>
-          </FAQItem>
-
-          <FAQItem>
-            <Question>Can I change which honey I get?</Question>
-            <Answer>
-              Yes! Swap between Wildflower, Clover, and Forest anytime before your next shipment. 
-              Try different varieties or stick with your favorite.
-            </Answer>
-          </FAQItem>
-
-          <FAQItem>
-            <Question>When will I be charged?</Question>
-            <Answer>
-              You'll be charged when each order ships according to your frequency. 
-              You'll get an email reminder a few days before each shipment.
-            </Answer>
-          </FAQItem>
-        </FAQ>
-
-        <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-          <HeroButton to="/products/wildflower" style={{ background: '#3b2f20', color: '#f4e8c4' }}>
-            Start Saving Today
-          </HeroButton>
-        </div>
-      </Content>
-
-      <NewsletterFooter />
-      <Footer />
-    </PageContainer>
-  );
-}
-
-export default Subscribe;

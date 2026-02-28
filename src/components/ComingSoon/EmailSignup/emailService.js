@@ -46,7 +46,7 @@ export const submitEmail = async (email) => {
         to_name: email.split('@')[0],
         visitor_email: email,
         from_name: 'irek\'s apiary',
-        message: 'thanks for joining the waitlist. we\'re busy getting everything ready for launch — think small-batch honey that\'ll make your morning toast jealous.',
+        message: 'thanks for joining the waitlist. we\'re busy getting everything ready for launch. think small-batch honey that\'ll make your morning toast jealous.',
         reply_to: EMAIL_CONFIG.toEmail,
         to_email: email
       }

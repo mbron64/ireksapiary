@@ -1,101 +1,117 @@
 import React from 'react';
 import styled from 'styled-components';
-import AnnouncementBar from '../shared/AnnouncementBar';
-import SharedHeader from '../shared/SharedHeader';
-import NewsletterFooter from '../shared/NewsletterFooter';
-import Footer from '../shared/Footer';
+import PageWrapper from '../Layout/PageWrapper';
 
-const PageContainer = styled.div`
-  background-color: #f4e8c4;
-  min-height: 100vh;
-  color: #3b2f20;
-  font-family: 'Crimson Text', 'Times New Roman', serif;
-`;
-
-const Content = styled.main`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-`;
-
-const Title = styled.h2`
-  font-family: 'EB Garamond', serif;
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  text-align: center;
-`;
-
-const Section = styled.section`
-  margin-bottom: 3rem;
-  line-height: 1.8;
-  font-size: 1.1rem;
-`;
-
-const SectionTitle = styled.h3`
-  font-family: 'EB Garamond', serif;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-`;
-
-function About() {
+export default function About() {
   return (
-    <PageContainer>
-      <AnnouncementBar message="🐝 LOCALLY SOURCED FROM CALIFORNIA'S CENTRAL VALLEY" />
-      <SharedHeader />
+    <PageWrapper>
+      <Hero>
+        <Label>Our Story</Label>
+        <Title>Irek's Apiary</Title>
+        <Subtitle>
+          Small batch, raw & unfiltered honey from Vestal, New York since 2012.
+        </Subtitle>
+      </Hero>
 
       <Content>
-        <Title>About Irek's Apiary</Title>
+        <Block>
+          <H2>How It Started</H2>
+          <P>
+            What began as a single backyard hive in 2012 has grown into a labor
+            of love. Irek's Apiary was founded on a simple belief: honey should
+            taste like the flowers it comes from, not like the inside of a
+            factory.
+          </P>
+          <P>
+            We started selling at local farmers' markets in the Southern Tier
+            of New York, and word spread quickly. People could taste the
+            difference. Real, raw, unfiltered honey. The way it's supposed to be.
+          </P>
+        </Block>
 
-        <Section>
-          <p>
-            Welcome to Irek's Apiary, where we believe honey should be enjoyed the way nature intended — 
-            raw, unfiltered, and full of character.
-          </p>
-        </Section>
+        <Block>
+          <H2>Our Philosophy</H2>
+          <P>
+            Every jar of Irek's honey is raw and unfiltered. That means it's never
+            heated above hive temperature, never ultra-filtered, and never blended
+            with honey from other sources. The pollen, enzymes, and antioxidants
+            that make raw honey special? They're all still in there.
+          </P>
+          <P>
+            We believe in transparency. You can trace every jar back to our
+            apiaries in Vestal, NY. We harvest by hand, bottle the same day, and
+            put the harvest date on every label.
+          </P>
+        </Block>
 
-        <Section>
-          <SectionTitle>Our Story</SectionTitle>
-          <p>
-            Founded in the heart of California's Central Valley, our journey began with a simple passion: 
-            bringing exceptional, sustainably-harvested honey to people who appreciate quality. Each jar 
-            tells the story of local wildflowers, dedicated bees, and careful stewardship.
-          </p>
-        </Section>
-
-        <Section>
-          <SectionTitle>Our Philosophy</SectionTitle>
-          <p>
-            We don't believe in compromising. Our honey is never heated, never ultra-filtered, and never 
-            blended from multiple sources. What you get is pure, traceable honey that captures the essence 
-            of seasonal blooms.
-          </p>
-        </Section>
-
-        <Section>
-          <SectionTitle>Sustainability</SectionTitle>
-          <p>
-            Bee health is everything. We practice sustainable beekeeping that prioritizes the wellbeing 
-            of our colonies and the local ecosystem. From habitat preservation to ethical harvesting 
-            practices, every decision we make considers its impact on these incredible pollinators.
-          </p>
-        </Section>
-
-        <Section>
-          <SectionTitle>Why Raw Honey?</SectionTitle>
-          <p>
-            Raw honey contains beneficial enzymes, antioxidants, and nutrients that are destroyed by 
-            high-heat processing. It's not just about taste — though our honey certainly excels there — 
-            it's about preserving all the goodness that makes honey nature's perfect sweetener.
-          </p>
-        </Section>
+        <Block>
+          <H2>Sustainability</H2>
+          <P>
+            Healthy bees make great honey. We practice sustainable beekeeping: no
+            chemicals, no antibiotics, and no corner-cutting. Our bees forage on
+            spring blossoms, summer wildflowers, and fall goldenrod across the
+            rolling hills of upstate New York.
+          </P>
+          <P>
+            We never take more than the bees can spare, and we leave plenty of
+            honey for them to get through the winter. It's slower. It produces
+            less. But the result speaks for itself.
+          </P>
+        </Block>
       </Content>
-
-      <NewsletterFooter />
-      <Footer />
-    </PageContainer>
+    </PageWrapper>
   );
 }
 
-export default About;
+const Hero = styled.section`
+  text-align: center;
+  padding: ${({ theme }) => theme.space['3xl']} ${({ theme }) => theme.space.xl}
+           ${({ theme }) => theme.space.xl};
+  max-width: ${({ theme }) => theme.layout.maxWidth};
+  margin: 0 auto;
+`;
+
+const Label = styled.p`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: ${({ theme }) => theme.colors.gold};
+  margin-bottom: ${({ theme }) => theme.space.sm};
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2.5rem, 5vw, ${({ theme }) => theme.fontSizes['4xl']});
+  margin-bottom: ${({ theme }) => theme.space.md};
+`;
+
+const Subtitle = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  opacity: 0.7;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.5;
+`;
+
+const Content = styled.div`
+  max-width: 680px;
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.space.xl} ${({ theme }) => theme.space.xl}
+           ${({ theme }) => theme.space['4xl']};
+`;
+
+const Block = styled.div`
+  margin-bottom: ${({ theme }) => theme.space['2xl']};
+`;
+
+const H2 = styled.h2`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  margin-bottom: ${({ theme }) => theme.space.md};
+`;
+
+const P = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: 1.7;
+  margin-bottom: ${({ theme }) => theme.space.md};
+  opacity: 0.85;
+`;
