@@ -90,6 +90,13 @@ export default function Footer() {
       </Inner>
 
       <Bottom>
+        <LegalRow>
+          <FooterLink to="/privacy">Privacy</FooterLink>
+          <LegalDot>&middot;</LegalDot>
+          <FooterLink to="/terms">Terms</FooterLink>
+          <LegalDot>&middot;</LegalDot>
+          <FooterLink to="/shipping">Shipping & Returns</FooterLink>
+        </LegalRow>
         <small>&copy; {new Date().getFullYear()} Irek's Apiary &middot; Vestal, NY &middot; Est. 2012</small>
       </Bottom>
     </Wrapper>
@@ -202,6 +209,20 @@ const ExtLink = styled.a`
   opacity: 0.75;
   transition: opacity ${({ theme }) => theme.transitions.fast};
   &:hover { opacity: 1; }
+`;
+
+const LegalRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${({ theme }) => theme.space.sm};
+  margin-bottom: ${({ theme }) => theme.space.md};
+  flex-wrap: wrap;
+`;
+
+const LegalDot = styled.span`
+  opacity: 0.3;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
 const Bottom = styled.div`

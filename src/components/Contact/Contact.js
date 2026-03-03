@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import emailjs from '@emailjs/browser';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
-import { submitEmail } from '../ComingSoon/EmailSignup/emailService';
+import { EMAIL_CONFIG } from '../../config/email';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -18,9 +19,26 @@ export default function Contact() {
 
     setStatus('sending');
     try {
-      await submitEmail(form.email);
-      setStatus('success');
-      setForm({ name: '', email: '', subject: '', message: '' });
+      const result = await emailjs.send(
+        EMAIL_CONFIG.serviceId,
+        EMAIL_CONFIG.templateId,
+        {
+          from_name: form.name || 'Website Visitor',
+          to_name: "Irek's Apiary",
+          visitor_email: form.email,
+          subject: form.subject || 'Contact Form',
+          message: form.message,
+          reply_to: form.email,
+          to_email: EMAIL_CONFIG.toEmail,
+        },
+        EMAIL_CONFIG.publicKey,
+      );
+      if (result.status === 200) {
+        setStatus('success');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
     } catch {
       setStatus('error');
     }

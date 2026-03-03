@@ -15,6 +15,11 @@ const Subscribe = lazy(() => import('./components/Subscribe/Subscribe'));
 const HoneyTrio = lazy(() => import('./components/Bundle/HoneyTrio'));
 const ProductDetail = lazy(() => import('./components/Products/ProductDetail'));
 const Nucs = lazy(() => import('./components/Nucs/Nucs'));
+const OrderConfirmation = lazy(() => import('./components/OrderConfirmation/OrderConfirmation'));
+const NotFound = lazy(() => import('./components/NotFound/NotFound'));
+const PrivacyPolicy = lazy(() => import('./components/Legal/PrivacyPolicy'));
+const Terms = lazy(() => import('./components/Legal/Terms'));
+const ShippingReturns = lazy(() => import('./components/Legal/ShippingReturns'));
 
 function PageLoader() {
   return (
@@ -57,6 +62,11 @@ const router = createBrowserRouter([
       { path: '/bundle/trio', element: <HoneyTrio /> },
       { path: '/products/:slug', element: <ProductDetail /> },
       { path: '/nucs', element: <Nucs /> },
+      { path: '/order-confirmation', element: <OrderConfirmation /> },
+      { path: '/privacy', element: <PrivacyPolicy /> },
+      { path: '/terms', element: <Terms /> },
+      { path: '/shipping', element: <ShippingReturns /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);

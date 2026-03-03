@@ -5,7 +5,7 @@ const SITE_NAME = "Irek's Apiary";
 const BASE_URL = 'https://ireksapiary.com';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg`;
 const DEFAULT_DESCRIPTION =
-  'Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY. Small-batch beekeeping since 2012.';
+  'Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012.';
 
 export default function SEO({
   title,
@@ -15,7 +15,7 @@ export default function SEO({
   type = 'website',
   children,
 }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Raw Local Honey & Nucs | Vestal, NY`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Raw Local Honey & Nucs | Binghamton & Vestal, NY`;
   const url = `${BASE_URL}${path}`;
   const imgUrl = image.startsWith('http') ? image : `${BASE_URL}${image}`;
 

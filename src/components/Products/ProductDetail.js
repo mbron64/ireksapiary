@@ -27,8 +27,8 @@ export default function ProductDetail() {
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
       <SEO
-        title={`${product.name} | Raw Local Honey`}
-        description={product.description}
+        title={`${product.name} | Raw Local Honey | Binghamton, NY`}
+        description={`${product.description} Raw, unfiltered honey from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area.`}
         path={`/products/${slug}`}
         image={product.images[0]}
         type="product"

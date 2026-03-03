@@ -24,8 +24,8 @@ export default function Subscribe() {
   return (
     <PageWrapper>
       <SEO
-        title="Honey Subscription | Monthly Delivery"
-        description="Get raw, local honey delivered every month. Save on every order, cancel anytime. Free shipping on all subscriptions."
+        title="Honey Subscription | Monthly Delivery | Binghamton, NY"
+        description="Get raw, local honey from Vestal, NY delivered every month. Serving the Binghamton and Southern Tier area. Save on every order, cancel anytime. Free shipping on all subscriptions."
         path="/subscribe"
       />
       <Hero>

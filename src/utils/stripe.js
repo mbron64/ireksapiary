@@ -15,8 +15,8 @@ export async function createCheckoutSession(cartItems) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       items,
-      successUrl: `${window.location.origin}?checkout=success`,
-      cancelUrl: `${window.location.origin}?checkout=cancelled`,
+      successUrl: `${window.location.origin}/order-confirmation`,
+      cancelUrl: `${window.location.origin}/nucs`,
     }),
   });
 

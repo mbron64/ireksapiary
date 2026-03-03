@@ -10,8 +10,8 @@ export default function Shop() {
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
       <SEO
-        title="Shop Raw Honey | Spring, Summer & Fall"
-        description="Raw, unfiltered honey from Vestal, NY. Spring, Summer, and Fall harvests. Free shipping on honey orders over $50."
+        title="Shop Raw Honey | Spring, Summer & Fall | Binghamton, NY"
+        description="Raw, unfiltered honey from our apiary in Vestal, NY, serving Binghamton and the Southern Tier. Spring, Summer, and Fall harvests. Free shipping on honey orders over $50."
         path="/shop"
       />
       <Header>

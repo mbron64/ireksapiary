@@ -146,10 +146,38 @@ export default function Blog() {
   return (
     <PageWrapper>
       <SEO
-        title="Beekeeping Blog | Honey Tips & Bee News"
-        description="Learn about raw honey, beekeeping, and why bees matter. Tips, recipes, and stories from our apiary in Vestal, NY."
+        title="Beekeeping Blog | Honey Tips & Bee News | Binghamton, NY"
+        description="Learn about raw honey, beekeeping, and why bees matter. Tips, guides, and stories from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area."
         path="/blog"
-      />
+      >
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "Irek's Apiary Beekeeping Blog",
+          "url": "https://ireksapiary.com/blog",
+          "description": "Beekeeping tips, honey guides, and stories from our apiary in Vestal, NY.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Irek's Apiary",
+            "url": "https://ireksapiary.com"
+          },
+          "blogPost": POSTS.map(post => ({
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "datePublished": post.date,
+            "description": post.excerpt,
+            "author": {
+              "@type": "Organization",
+              "name": "Irek's Apiary"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Irek's Apiary",
+              "url": "https://ireksapiary.com"
+            }
+          }))
+        })}</script>
+      </SEO>
       <Header>
         <Label>From the Hive</Label>
         <Title>Blog</Title>

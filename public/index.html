@@ -6,26 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f4e8c4" />
 
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_MEASUREMENT_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      var gaId = '%REACT_APP_GA_MEASUREMENT_ID%';
+      if (gaId && gaId !== '%' + 'REACT_APP_GA_MEASUREMENT_ID' + '%') {
+        gtag('config', gaId);
+      }
+    </script>
+
     <!-- Primary Meta Tags (fallback for crawlers that don't execute JS) -->
-    <title>Irek's Apiary | Raw Local Honey & Nucs | Vestal, NY</title>
-    <meta name="description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY. Small-batch beekeeping since 2012. Free shipping on honey orders over $50.">
+    <title>Irek's Apiary | Raw Local Honey & Nucs | Binghamton & Vestal, NY</title>
+    <meta name="description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012. Free shipping on honey orders over $50.">
     <link rel="canonical" href="https://ireksapiary.com/" />
 
     <!-- Open Graph / Facebook / iMessage -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ireksapiary.com/">
-    <meta property="og:title" content="Irek's Apiary | Raw Local Honey & Nucs | Vestal, NY">
-    <meta property="og:description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY. Small-batch beekeeping since 2012.">
+    <meta property="og:title" content="Irek's Apiary | Raw Local Honey & Nucs | Binghamton & Vestal, NY">
+    <meta property="og:description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012.">
     <meta property="og:image" content="https://ireksapiary.com/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Irek's Apiary">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://ireksapiary.com/">
-    <meta name="twitter:title" content="Irek's Apiary | Raw Local Honey & Nucs | Vestal, NY">
-    <meta name="twitter:description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY. Small-batch beekeeping since 2012.">
+    <meta name="twitter:title" content="Irek's Apiary | Raw Local Honey & Nucs | Binghamton & Vestal, NY">
+    <meta name="twitter:description" content="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012.">
     <meta name="twitter:image" content="https://ireksapiary.com/og-image.jpg">
 
     <!-- iOS -->
@@ -46,13 +59,13 @@
       "@type": "LocalBusiness",
       "name": "Irek's Apiary",
       "url": "https://ireksapiary.com",
-      "description": "Small-batch raw honey and honeybee nucs from our apiary in Vestal, NY. Beekeeping since 2012.",
+      "description": "Small-batch raw honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Beekeeping since 2012.",
       "image": "https://ireksapiary.com/og-image.jpg",
-      "telephone": "",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Vestal",
         "addressRegion": "NY",
+        "postalCode": "13850",
         "addressCountry": "US"
       },
       "geo": {
@@ -60,6 +73,32 @@
         "latitude": 42.0848,
         "longitude": -76.0542
       },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Binghamton",
+          "sameAs": "https://en.wikipedia.org/wiki/Binghamton,_New_York"
+        },
+        {
+          "@type": "City",
+          "name": "Vestal",
+          "sameAs": "https://en.wikipedia.org/wiki/Vestal,_New_York"
+        },
+        {
+          "@type": "City",
+          "name": "Endicott",
+          "sameAs": "https://en.wikipedia.org/wiki/Endicott,_New_York"
+        },
+        {
+          "@type": "City",
+          "name": "Johnson City",
+          "sameAs": "https://en.wikipedia.org/wiki/Johnson_City,_New_York"
+        },
+        {
+          "@type": "State",
+          "name": "New York"
+        }
+      ],
       "priceRange": "$",
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
@@ -67,7 +106,32 @@
         "opens": "00:00",
         "closes": "23:59"
       },
-      "sameAs": []
+      "sameAs": [
+        "https://instagram.com/ireksapiary",
+        "https://tiktok.com/@ireksapiary"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Products",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Raw Honey",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Spring Honey" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Summer Honey" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Fall Honey" } }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Honeybee Nucs",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "5-Frame Honeybee Nuc" } }
+            ]
+          }
+        ]
+      }
     }
     </script>
   </head>
