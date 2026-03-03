@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
+import NotifyMe from '../shared/NotifyMe';
 import { SUBSCRIPTION_DISCOUNT } from '../../config/products';
 
 const BENEFITS = [
@@ -34,7 +35,7 @@ export default function Subscribe() {
           Set it and forget it. Fresh raw honey delivered monthly
           with {Math.round(SUBSCRIPTION_DISCOUNT * 100)}% off every order.
         </Subtitle>
-        <CTA to="/shop">Start Your Subscription</CTA>
+        <NotifyMe label="Coming Soon" />
       </Hero>
 
       <Section>
@@ -92,18 +93,6 @@ const Subtitle = styled.p`
   max-width: 520px;
   margin: 0 auto ${({ theme }) => theme.space.xl};
   line-height: 1.5;
-`;
-
-const CTA = styled(Link)`
-  display: inline-block;
-  padding: ${({ theme }) => theme.space.md} ${({ theme }) => theme.space.xl};
-  background: ${({ theme }) => theme.colors.brown};
-  color: ${({ theme }) => theme.colors.cream};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: ${({ theme }) => theme.fontSizes.md};
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: opacity ${({ theme }) => theme.transitions.fast};
-  &:hover { opacity: 0.85; }
 `;
 
 const Section = styled.section`

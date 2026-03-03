@@ -2,28 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
-import { useCart } from '../../context/CartContext';
+import NotifyMe from '../shared/NotifyMe';
 import { PRODUCTS, BUNDLE } from '../../config/products';
 
 export default function HoneyTrio() {
-  const { addToCart } = useCart();
-
-  const handleAddBundle = () => {
-    BUNDLE.products.forEach(slug => {
-      const product = PRODUCTS[slug];
-      const variant = product.variants['8oz'];
-      addToCart({
-        id: `${product.id}-trio`,
-        name: `${product.name} (Trio)`,
-        variant: variant.id,
-        size: variant.size,
-        price: +(product.basePrice * (1 - BUNDLE.discount)).toFixed(2),
-        image: product.images[0],
-        stripePriceId: variant.stripePriceId,
-      });
-    });
-  };
-
   return (
     <PageWrapper announcement="Save 15% with The Honey Trio">
       <SEO
@@ -40,7 +22,7 @@ export default function HoneyTrio() {
             <OldPrice>${BUNDLE.fullPrice}</OldPrice>
             <NewPrice>${BUNDLE.price}</NewPrice>
           </Pricing>
-          <AddBtn onClick={handleAddBundle}>Add Trio to Cart</AddBtn>
+          <NotifyMe />
         </HeroContent>
         <HeroImages>
           <JarImg src="/assets/products/honey1.png" alt="Spring" $rotate={-8} />
@@ -83,7 +65,7 @@ export default function HoneyTrio() {
 
       <CTASection>
         <CTATitle>Try all three for ${BUNDLE.price}</CTATitle>
-        <AddBtn onClick={handleAddBundle}>Add Trio to Cart</AddBtn>
+        <NotifyMe />
       </CTASection>
     </PageWrapper>
   );
@@ -154,17 +136,6 @@ const NewPrice = styled.span`
   font-size: ${({ theme }) => theme.fontSizes['3xl']};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gold};
-`;
-
-const AddBtn = styled.button`
-  padding: ${({ theme }) => theme.space.md} ${({ theme }) => theme.space.xl};
-  background: ${({ theme }) => theme.colors.brown};
-  color: ${({ theme }) => theme.colors.cream};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: ${({ theme }) => theme.fontSizes.md};
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: opacity ${({ theme }) => theme.transitions.fast};
-  &:hover { opacity: 0.85; }
 `;
 
 const HeroImages = styled.div`

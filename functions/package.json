@@ -1,0 +1,15 @@
+{
+  "name": "ireksapiary-functions",
+  "description": "Cloud Functions for Irek's Apiary Stripe checkout",
+  "engines": {
+    "node": "22"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0",
+    "stripe": "^17.0.0",
+    "cors": "^2.8.5"
+  },
+  "private": true
+}

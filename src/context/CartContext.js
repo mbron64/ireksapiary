@@ -35,14 +35,14 @@ export function CartProvider({ children }) {
   }, [cart]);
 
   const addToCart = useCallback((product, quantity = 1) => {
-    if (!product?.id || !product?.variant) {
+    if (!product?.id) {
       setCheckoutError('Unable to add this item. Please try again.');
       return;
     }
 
     setCart(prev => {
-      const key = `${product.id}::${product.variant}`;
-      const idx = prev.findIndex(i => `${i.id}::${i.variant}` === key);
+      const key = product.id;
+      const idx = prev.findIndex(i => i.id === key);
 
       if (idx >= 0) {
         return prev.map((item, i) =>
@@ -56,22 +56,18 @@ export function CartProvider({ children }) {
     setCheckoutError(null);
   }, []);
 
-  const removeFromCart = useCallback((productId, variant) => {
-    setCart(prev => prev.filter(
-      item => !(item.id === productId && item.variant === variant)
-    ));
+  const removeFromCart = useCallback((productId) => {
+    setCart(prev => prev.filter(item => item.id !== productId));
   }, []);
 
-  const updateQuantity = useCallback((productId, variant, quantity) => {
+  const updateQuantity = useCallback((productId, quantity) => {
     if (quantity < 1) {
-      removeFromCart(productId, variant);
+      removeFromCart(productId);
       return;
     }
     setCart(prev =>
       prev.map(item =>
-        item.id === productId && item.variant === variant
-          ? { ...item, quantity }
-          : item
+        item.id === productId ? { ...item, quantity } : item
       )
     );
   }, [removeFromCart]);
@@ -99,12 +95,6 @@ export function CartProvider({ children }) {
   const proceedToCheckout = useCallback(async () => {
     if (cart.length === 0) {
       setCheckoutError('Your cart is empty');
-      return;
-    }
-
-    const invalid = cart.filter(item => !item.stripePriceId);
-    if (invalid.length > 0) {
-      setCheckoutError('Checkout is not available yet. We\'re finishing setup.');
       return;
     }
 

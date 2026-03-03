@@ -63,7 +63,7 @@ export default function CartDrawer() {
             </EmptyState>
           ) : (
             cart.map(item => (
-              <CartItem key={`${item.id}::${item.variant}`}>
+              <CartItem key={item.id}>
                 <ItemImage src={item.image} alt={item.name} />
                 <ItemDetails>
                   <ItemName>{item.name}</ItemName>
@@ -72,21 +72,21 @@ export default function CartDrawer() {
                 </ItemDetails>
                 <QuantityControls>
                   <QtyBtn
-                    onClick={() => updateQuantity(item.id, item.variant, item.quantity - 1)}
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     aria-label="Decrease quantity"
                   >
                     <Minus size={14} />
                   </QtyBtn>
                   <QtyValue>{item.quantity}</QtyValue>
                   <QtyBtn
-                    onClick={() => updateQuantity(item.id, item.variant, item.quantity + 1)}
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     aria-label="Increase quantity"
                   >
                     <Plus size={14} />
                   </QtyBtn>
                 </QuantityControls>
                 <RemoveBtn
-                  onClick={() => removeFromCart(item.id, item.variant)}
+                  onClick={() => removeFromCart(item.id)}
                   aria-label={`Remove ${item.name}`}
                 >
                   <X size={16} />

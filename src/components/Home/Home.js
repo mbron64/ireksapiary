@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
 import JarCarousel from '../Products/JarCarousel';
-import { useCart } from '../../context/CartContext';
+import NotifyMe from '../shared/NotifyMe';
 import { PRODUCTS, BUNDLE } from '../../config/products';
 import { ACTIVE_HERO } from '../../config/heroes';
 
@@ -18,21 +18,7 @@ function renderHeadline(str) {
 }
 
 export default function Home() {
-  const { addToCart } = useCart();
   const hero = ACTIVE_HERO;
-
-  const handleQuickAdd = (product, variantKey = '8oz') => {
-    const variant = product.variants[variantKey];
-    addToCart({
-      id: product.id,
-      name: product.name,
-      variant: variant.id,
-      size: variant.size,
-      price: variant.price,
-      image: product.images[0],
-      stripePriceId: variant.stripePriceId,
-    });
-  };
 
   return (
     <PageWrapper announcement="Spring 2026 Nucs · Limited Availability · Reserve Yours" announcementLink="/nucs">
@@ -76,9 +62,7 @@ export default function Home() {
                 <CardTag>{product.tagline}</CardTag>
                 <CardName to={`/products/${product.slug}`}>{product.name}</CardName>
                 <CardPrice>From ${product.basePrice}</CardPrice>
-                <AddButton onClick={() => handleQuickAdd(product)}>
-                  Add to Cart
-                </AddButton>
+                <NotifyMe compact />
               </CardInfo>
             </ProductCard>
           ))}
@@ -279,22 +263,6 @@ const CardPrice = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   color: ${({ theme }) => theme.colors.brownMedium};
   margin-bottom: ${({ theme }) => theme.space.md};
-`;
-
-const AddButton = styled.button`
-  width: 100%;
-  padding: ${({ theme }) => theme.space.sm} ${({ theme }) => theme.space.md};
-  border: 1px solid ${({ theme }) => theme.colors.brown};
-  color: ${({ theme }) => theme.colors.brown};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: all ${({ theme }) => theme.transitions.fast};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.brown};
-    color: ${({ theme }) => theme.colors.cream};
-  }
 `;
 
 const BundleSection = styled.section`

@@ -3,25 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
-import { useCart } from '../../context/CartContext';
+import NotifyMe from '../shared/NotifyMe';
 import { PRODUCTS, BUNDLE } from '../../config/products';
 
 export default function Shop() {
-  const { addToCart } = useCart();
-
-  const handleQuickAdd = (product, variantKey = '8oz') => {
-    const variant = product.variants[variantKey];
-    addToCart({
-      id: product.id,
-      name: product.name,
-      variant: variant.id,
-      size: variant.size,
-      price: variant.price,
-      image: product.images[0],
-      stripePriceId: variant.stripePriceId,
-    });
-  };
-
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
       <SEO
@@ -53,7 +38,7 @@ export default function Shop() {
                 <Price>${product.basePrice}</Price>
                 <Size>{product.variants['8oz'].size}</Size>
               </PriceRow>
-              <AddBtn onClick={() => handleQuickAdd(product)}>Add to Cart</AddBtn>
+              <NotifyMe compact />
             </Info>
           </Card>
         ))}
@@ -190,21 +175,6 @@ const Size = styled.span`
   color: ${({ theme }) => theme.colors.brownMedium};
 `;
 
-
-const AddBtn = styled.button`
-  width: 100%;
-  padding: ${({ theme }) => theme.space.sm} ${({ theme }) => theme.space.md};
-  border: 1px solid ${({ theme }) => theme.colors.brown};
-  color: ${({ theme }) => theme.colors.brown};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: all ${({ theme }) => theme.transitions.fast};
-  &:hover {
-    background: ${({ theme }) => theme.colors.brown};
-    color: ${({ theme }) => theme.colors.cream};
-  }
-`;
 
 const BundleBanner = styled.section`
   background: ${({ theme }) => theme.colors.brown};

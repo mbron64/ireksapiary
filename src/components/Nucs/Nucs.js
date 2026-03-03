@@ -48,22 +48,18 @@ export default function Nucs() {
     addToCart({
       id: 'nuc-box-deposit',
       name: 'Nuc Box Deposit',
-      variant: 'nuc-box-deposit',
       size: 'Refundable',
       price: BOX_DEPOSIT,
       image: '/assets/nucs/nucs2.jpg',
-      stripePriceId: process.env.REACT_APP_STRIPE_NUC_BOX_DEPOSIT_PRICE_ID || '',
       pickup: true,
     }, quantity);
     if (payNow) {
       addToCart({
         id: 'nuc',
         name: '5-Frame Nuc',
-        variant: 'nuc',
         size: '5-frame',
         price: NUC_PRICE,
         image: '/assets/nucs/nucsFrame.jpg',
-        stripePriceId: process.env.REACT_APP_STRIPE_NUC_PRICE_ID || '',
         pickup: true,
       }, quantity);
     }
@@ -152,7 +148,7 @@ export default function Nucs() {
           </QuantityRow>
 
           <AddToCartBtn onClick={handleAddToCart}>
-            Reserve {quantity > 1 ? `${quantity} Nucs` : 'Nuc'}
+            Reserve {quantity > 1 ? `${quantity} Nucs` : 'Your Nuc'}
           </AddToCartBtn>
 
           <Fine>

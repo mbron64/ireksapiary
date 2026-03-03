@@ -3,15 +3,14 @@ import { useParams, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
+import NotifyMe from '../shared/NotifyMe';
 import JarCarousel from './JarCarousel';
-import { useCart } from '../../context/CartContext';
 import { PRODUCTS, calculatePrice, SUBSCRIPTION_DISCOUNT } from '../../config/products';
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const product = PRODUCTS[slug];
 
-  const { addToCart } = useCart();
   const [selectedVariant, setSelectedVariant] = useState('8oz');
   const [quantity, setQuantity] = useState(1);
   const [isSubscription, setIsSubscription] = useState(false);
@@ -24,20 +23,6 @@ export default function ProductDetail() {
   if (!product) return <Navigate to="/shop" replace />;
 
   const variantKeys = Object.keys(product.variants);
-  const variant = product.variants[selectedVariant];
-
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      variant: variant.id,
-      size: variant.size,
-      price: pricing.total / quantity,
-      image: product.images[0],
-      stripePriceId: variant.stripePriceId,
-      isSubscription,
-    }, quantity);
-  };
 
   return (
     <PageWrapper announcement="Free shipping on honey orders over $50" announcementLink="/shop">
@@ -59,7 +44,7 @@ export default function ProductDetail() {
             "@type": "Offer",
             "price": v.price.toFixed(2),
             "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/OutOfStock",
             "url": `https://ireksapiary.com/products/${slug}`,
             "name": v.size,
           })),
@@ -131,9 +116,7 @@ export default function ProductDetail() {
             {pricing.freeShipping && <ShipBadge>Free Shipping</ShipBadge>}
           </PriceSummary>
 
-          <AddToCartBtn onClick={handleAddToCart}>
-            Add to Cart · ${pricing.total.toFixed(2)}
-          </AddToCartBtn>
+          <NotifyMe />
         </PurchaseCol>
       </HeroGrid>
 
@@ -405,17 +388,6 @@ const ShipBadge = styled.span`
   border-radius: ${({ theme }) => theme.radii.sm};
 `;
 
-const AddToCartBtn = styled.button`
-  width: 100%;
-  padding: ${({ theme }) => theme.space.lg};
-  background: ${({ theme }) => theme.colors.brown};
-  color: ${({ theme }) => theme.colors.cream};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: opacity ${({ theme }) => theme.transitions.fast};
-  &:hover { opacity: 0.85; }
-`;
 
 const Section = styled.section`
   max-width: ${({ theme }) => theme.layout.maxWidth};
