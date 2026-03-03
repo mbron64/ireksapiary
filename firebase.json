@@ -12,6 +12,10 @@
         "function": "createCheckoutSession"
       },
       {
+        "source": "/api/subscribe",
+        "function": "subscribeEmail"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

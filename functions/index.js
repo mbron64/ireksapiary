@@ -4,6 +4,43 @@ const stripe = require('stripe');
 const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
+const db = admin.firestore();
+
+exports.subscribeEmail = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+      const { email, source } = req.body;
+
+      if (!email || !email.includes('@')) {
+        return res.status(400).json({ error: 'Valid email required' });
+      }
+
+      const normalized = email.trim().toLowerCase();
+
+      const existing = await db.collection('subscribers')
+        .where('email', '==', normalized).limit(1).get();
+
+      if (!existing.empty) {
+        return res.status(200).json({ status: 'already_subscribed' });
+      }
+
+      await db.collection('subscribers').add({
+        email: normalized,
+        source: source || 'website',
+        subscribedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      res.status(200).json({ status: 'subscribed' });
+    } catch (err) {
+      console.error('Subscribe error:', err);
+      res.status(500).json({ error: err.message });
+    }
+  });
+});
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {

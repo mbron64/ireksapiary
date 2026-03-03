@@ -36,7 +36,7 @@ export default function Footer() {
 
     setStatus('sending');
     try {
-      await submitEmail(email);
+      await submitEmail(email, 'newsletter');
       setStatus('success');
       setEmail('');
     } catch {

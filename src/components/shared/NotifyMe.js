@@ -13,7 +13,7 @@ export default function NotifyMe({ compact = false, label = 'Sold Out' }) {
     if (!email || status === STATES.sending) return;
     setStatus(STATES.sending);
 
-    const result = await submitEmail(email);
+    const result = await submitEmail(email, 'notify-me');
     if (result.success) {
       setStatus(STATES.success);
       setEmail('');
