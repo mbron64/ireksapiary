@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { submitEmail } from '../ComingSoon/EmailSignup/emailService';
+import { trackEvent } from '../../utils/analytics';
 
 const STATES = { idle: 'idle', sending: 'sending', success: 'success', error: 'error' };
 
@@ -15,6 +16,7 @@ export default function NotifyMe({ compact = false, label = 'Sold Out' }) {
 
     const result = await submitEmail(email, 'notify-me');
     if (result.success) {
+      trackEvent('generate_lead', { method: 'notify_me' });
       setStatus(STATES.success);
       setEmail('');
     } else {

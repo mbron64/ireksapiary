@@ -37,5 +37,6 @@ const Text = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   letter-spacing: 0.08em;
+  font-weight: 600;
   text-transform: uppercase;
 `;

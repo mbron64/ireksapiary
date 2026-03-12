@@ -146,6 +146,7 @@ const Actions = styled.div`
   align-items: center;
   justify-self: end;
   gap: ${({ theme }) => theme.space.md};
+  grid-column: 3;
 `;
 
 const CartButton = styled.button`

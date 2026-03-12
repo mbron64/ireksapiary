@@ -41,8 +41,8 @@ const theme = {
 
   //                  320px  → 1320px
   fontSizes: {
-    xs:    fluid(12, 12),   // 12px fixed
-    sm:    fluid(13, 14),   // 13 → 14
+    xs:    fluid(13, 14),   // 13 → 14
+    sm:    fluid(14, 15),   // 14 → 15
     base:  fluid(15, 16),   // 15 → 16
     md:    fluid(16, 18),   // 16 → 18
     lg:    fluid(18, 20),   // 18 → 20

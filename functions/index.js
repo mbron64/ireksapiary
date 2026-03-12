@@ -72,6 +72,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
       }));
 
       const sessionParams = {
+        payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
         success_url: successUrl || 'https://ireksapiary.com?success=true',

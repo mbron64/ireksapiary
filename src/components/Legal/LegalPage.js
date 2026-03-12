@@ -33,7 +33,7 @@ const Updated = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  opacity: 0.5;
+  opacity: 0.7;
   margin-bottom: ${({ theme }) => theme.space['2xl']};
 `;
 

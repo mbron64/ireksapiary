@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PageWrapper from '../Layout/PageWrapper';
 import SEO from '../shared/SEO';
 import { useCart } from '../../context/CartContext';
+import { trackEvent } from '../../utils/analytics';
 
 export default function OrderConfirmation() {
   const { clearCart } = useCart();
@@ -11,6 +12,7 @@ export default function OrderConfirmation() {
 
   useEffect(() => {
     if (!cleared.current) {
+      trackEvent('purchase', { currency: 'USD' });
       clearCart();
       cleared.current = true;
     }

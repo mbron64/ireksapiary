@@ -7,6 +7,91 @@ import SEO from '../shared/SEO';
 
 const POSTS = [
   {
+    id: 10,
+    title: 'What Makes Our Honey Different',
+    date: 'March 2026',
+    excerpt: 'Small-batch, unfiltered, and never heated. Here\'s why our honey tastes nothing like the stuff on supermarket shelves.',
+    body: `Most commercial honey is heated to 150\u00B0F or higher, ultra-filtered to remove pollen, and blended from multiple countries before it lands in that bear-shaped bottle. It's shelf-stable and consistent, but it's lost most of what made it interesting in the first place.
+
+We do things differently. Our honey goes from hive to jar with minimal processing. We strain it through a coarse mesh to remove beeswax and debris, and that's it. No heating, no pressure filtering, no blending. The pollen, propolis, enzymes, and natural yeasts all stay in.
+
+The result is honey that actually tastes like something. Our Spring honey is light and floral from apple blossoms and wildflowers. Summer is richer and more complex, pulled from goldenrod, clover, and black-eyed Susans. Fall is the boldest, with a deep, almost molasses-like character from late-season foraging.
+
+Every jar is from our hives in Vestal, NY. You can taste the Southern Tier in it. That's not marketing, it's biology. Bees forage within a few miles of the hive, so the honey reflects whatever is blooming in our corner of Upstate New York during that harvest.
+
+We bottle in small batches because that's the only way to keep each season's character distinct. When it's gone, it's gone until next year.`,
+    links: [
+      { text: 'Our Spring honey', to: '/products/spring' },
+      { text: 'Summer is richer', to: '/products/summer' },
+      { text: 'Fall is the boldest', to: '/products/fall' },
+    ],
+    cta: { label: 'Shop Honey', to: '/shop' },
+  },
+  {
+    id: 9,
+    title: 'When Is Nuc Season? A Guide for Upstate NY Beekeepers',
+    date: 'March 2026',
+    excerpt: 'Timing matters when buying nucs in Upstate New York. Here\'s when to order, when to pick up, and why spring is the window.',
+    body: `If you're planning to start a hive in Upstate New York, the window for buying nucs is narrower than you might think.
+
+Nuc season in our area runs from late April through early June, depending on the weather. Queens need to be actively laying, brood needs to be in all stages, and the colony needs enough population to sustain itself once transferred. That takes specific conditions that only line up in spring.
+
+Most nuc producers, including us, start taking pre-orders in January or February. By March, availability is often limited. By April, many sellers are sold out. If you're thinking about getting bees this year, the time to reserve is now, not when the dandelions bloom.
+
+Our nucs are raised right here in Vestal, NY. The queens are locally adapted, which matters more than people realize. A queen raised in Georgia and shipped north has never experienced an Upstate New York winter. Our queens have genetics suited to our climate, our nectar flow, and our seasons.
+
+Each nuc comes with five frames of drawn comb, a mated and laying queen, brood in all stages, and honey and pollen stores. You pick up in Vestal at dawn or dusk when the bees are calm and the foragers are home.
+
+We limit the number we sell each spring to keep quality high. Once they're reserved, that's it for the season.`,
+    links: [
+      { text: 'the time to reserve is now', to: '/nucs' },
+    ],
+    cta: { label: 'Reserve a Nuc', to: '/nucs' },
+  },
+  {
+    id: 8,
+    title: '5 Benefits of Eating Local Raw Honey',
+    date: 'March 2026',
+    excerpt: 'Local raw honey isn\'t just tastier. Here are five reasons it\'s worth seeking out from a beekeeper near you.',
+    body: `You've probably heard someone say local honey helps with allergies. The science on that is mixed, but there are plenty of real, well-documented reasons to choose local raw honey over the processed kind.
+
+First, raw honey contains active enzymes. Glucose oxidase, diastase, and invertase are all present in unheated honey and break down once you pasteurize it. These enzymes contribute to honey's natural antimicrobial properties and aid in digestion.
+
+Second, it's rich in antioxidants. Raw honey contains flavonoids and phenolic acids that have been linked to reduced inflammation and lower oxidative stress. Darker honeys like our Fall harvest tend to have higher antioxidant levels.
+
+Third, you know exactly where it comes from. Commercial honey is often blended from multiple countries, and some imported honey has been found to be adulterated with corn syrup or rice syrup. When you buy from a local beekeeper, you can ask about the hives, the bees, and the process.
+
+Fourth, you're supporting local pollinators. Every jar of local honey represents thousands of pollination visits to the plants and crops in your area. Buying local keeps those hives active and those bees working.
+
+Fifth, the flavor is incomparable. Mass-produced honey tastes like sugar water because it's been stripped of everything that made it distinctive. Raw honey from a single apiary has terroir, just like wine. It changes with the season, the flowers, and the year. It tastes like the place it came from.`,
+    links: [
+      { text: 'our Fall harvest', to: '/products/fall' },
+      { text: 'buy from a local beekeeper', to: '/shop' },
+    ],
+    cta: { label: 'Shop Honey', to: '/shop' },
+  },
+  {
+    id: 7,
+    title: 'Where to Buy Raw Honey in the Binghamton Area',
+    date: 'March 2026',
+    excerpt: 'Looking for real, raw honey near Binghamton, NY? Here\'s what to look for and where to find it.',
+    body: `If you're searching for raw honey in the Binghamton area, you have more options than the supermarket aisle. But not all honey is created equal, and "raw" on a label doesn't always mean what you think.
+
+True raw honey has never been heated above hive temperature (around 95\u00B0F) and hasn't been ultra-filtered. It should be slightly cloudy, may crystallize over time, and will have a more complex flavor than the clear, pourable stuff in a plastic bear. If it looks perfectly transparent and pours like water, it's been processed.
+
+Your best bet is buying directly from a local beekeeper. Farmers markets in the Binghamton, Vestal, and Endicott area are a great starting point. You can talk to the beekeeper, ask about their practices, and often sample before you buy.
+
+We sell our honey online with shipping throughout New York, and we offer local pickup in Vestal. Our hives are in the Southern Tier, and every jar comes from a single season's harvest. We never blend, heat, or ultra-filter.
+
+When you're shopping for honey locally, ask a few questions. Where are the hives? Is the honey heated during extraction or bottling? Is it filtered or strained? A real beekeeper will be happy to answer. If they can't, keep looking.
+
+Supporting local beekeepers does more than get you better honey. It keeps managed hives active in our area, which means more pollination for local farms, gardens, and wild plants. It's one of those rare purchases where everyone benefits.`,
+    links: [
+      { text: 'sell our honey online', to: '/shop' },
+    ],
+    cta: { label: 'Shop Honey', to: '/shop' },
+  },
+  {
     id: 6,
     title: 'Nuc vs. Package Bees: Which Should You Buy?',
     date: 'February 2026',
@@ -235,6 +320,7 @@ const Label = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
   margin-bottom: ${({ theme }) => theme.space.sm};
 `;
@@ -289,7 +375,7 @@ const PostTitle = styled.h2`
 
 const PostExcerpt = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.base};
-  opacity: 0.65;
+  opacity: 0.75;
   line-height: 1.5;
 `;
 
@@ -351,6 +437,7 @@ const CTALabel = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
   margin-bottom: ${({ theme }) => theme.space.sm};
 `;

@@ -82,6 +82,7 @@ const Label = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
   margin-bottom: ${({ theme }) => theme.space.sm};
 `;

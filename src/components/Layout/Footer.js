@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { submitEmail } from '../ComingSoon/EmailSignup/emailService';
+import { trackEvent } from '../../utils/analytics';
 
 const LINK_GROUPS = [
   {
@@ -37,6 +38,7 @@ export default function Footer() {
     setStatus('sending');
     try {
       await submitEmail(email, 'newsletter');
+      trackEvent('sign_up', { method: 'newsletter' });
       setStatus('success');
       setEmail('');
     } catch {
@@ -191,7 +193,7 @@ const ColTitle = styled.h4`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.5;
+  opacity: 0.7;
   margin-bottom: ${({ theme }) => theme.space.xs};
 `;
 
@@ -232,6 +234,6 @@ const Bottom = styled.div`
   border-top: 1px solid rgba(255,255,255,0.1);
   margin-top: ${({ theme }) => theme.space['2xl']};
   text-align: center;
-  opacity: 0.4;
+  opacity: 0.6;
   font-size: ${({ theme }) => theme.fontSizes.sm};
 `;

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { createCheckoutSession, redirectToCheckout } from '../utils/stripe';
 import { FREE_SHIPPING_THRESHOLD } from '../config/products';
+import { trackEvent } from '../utils/analytics';
 
 const CartContext = createContext();
 
@@ -52,12 +53,28 @@ export function CartProvider({ children }) {
       return [...prev, { ...product, quantity }];
     });
 
+    trackEvent('add_to_cart', {
+      currency: 'USD',
+      value: product.price * quantity,
+      items: [{ item_id: product.id, item_name: product.name, price: product.price, quantity }],
+    });
+
     setIsCartOpen(true);
     setCheckoutError(null);
   }, []);
 
   const removeFromCart = useCallback((productId) => {
-    setCart(prev => prev.filter(item => item.id !== productId));
+    setCart(prev => {
+      const removed = prev.find(item => item.id === productId);
+      if (removed) {
+        trackEvent('remove_from_cart', {
+          currency: 'USD',
+          value: removed.price * removed.quantity,
+          items: [{ item_id: removed.id, item_name: removed.name, price: removed.price, quantity: removed.quantity }],
+        });
+      }
+      return prev.filter(item => item.id !== productId);
+    });
   }, []);
 
   const updateQuantity = useCallback((productId, quantity) => {
@@ -101,6 +118,13 @@ export function CartProvider({ children }) {
     try {
       setIsCheckingOut(true);
       setCheckoutError(null);
+
+      trackEvent('begin_checkout', {
+        currency: 'USD',
+        value: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        items: cart.map(item => ({ item_id: item.id, item_name: item.name, price: item.price, quantity: item.quantity })),
+      });
+
       const url = await createCheckoutSession(cart);
       redirectToCheckout(url);
     } catch (error) {

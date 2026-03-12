@@ -96,6 +96,7 @@ const Label = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
   margin-bottom: ${({ theme }) => theme.space.sm};
 `;
@@ -205,6 +206,7 @@ const ProductTag = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
 `;
 
@@ -246,7 +248,7 @@ const TestQuote = styled.blockquote`
 const TestAuthor = styled.p`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  opacity: 0.5;
+  opacity: 0.7;
 `;
 
 const CTASection = styled.section`

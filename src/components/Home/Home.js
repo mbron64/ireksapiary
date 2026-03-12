@@ -147,7 +147,8 @@ const HeroTagline = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  opacity: 0.6;
+  font-weight: 600;
+  opacity: 0.8;
   margin-bottom: ${({ theme }) => theme.space.lg};
 `;
 
@@ -247,6 +248,7 @@ const CardTag = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.gold};
 `;
 
@@ -411,5 +413,5 @@ const TestimonialAuthor = styled.p`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: ${({ theme }) => theme.fontSizes.sm};
   letter-spacing: 0.05em;
-  opacity: 0.5;
+  opacity: 0.7;
 `;
