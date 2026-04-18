@@ -24,7 +24,7 @@ export default function Home() {
     <PageWrapper announcement="Spring 2026 Nucs · Limited Availability · Reserve Yours" announcementLink="/nucs">
       <SEO
         path="/"
-        description="Raw, unfiltered honey and honeybee nucs from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012. Free shipping on honey orders over $50."
+        description="Raw, unfiltered honey, honeybee nucs, and locally mated queens from our apiary in Vestal, NY, serving the Binghamton and Southern Tier area. Small-batch beekeeping since 2012. Free shipping on honey orders over $50."
       />
       <Hero>
         <HeroContent>

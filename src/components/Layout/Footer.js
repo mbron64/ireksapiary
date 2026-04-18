@@ -14,6 +14,7 @@ const LINK_GROUPS = [
       { to: '/products/fall', label: 'Fall Honey' },
       { to: '/bundle/trio', label: 'The Honey Trio' },
       { to: '/nucs', label: 'Honeybee Nucs' },
+      { to: '/queens', label: 'Mated Queens' },
       { to: '/subscribe', label: 'Subscribe & Save' },
     ],
   },

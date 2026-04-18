@@ -13,6 +13,12 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://ireksapiary.com/queens</loc>
+    <lastmod>2026-04-17</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://ireksapiary.com/shop</loc>
     <lastmod>2026-03-03</lastmod>
     <priority>0.9</priority>

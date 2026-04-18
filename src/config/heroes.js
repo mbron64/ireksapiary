@@ -22,6 +22,17 @@ export const HEROES = {
       alt: 'Honeybee Nuc Frame',
     },
   },
+
+  queens: {
+    tagline: '2026 Season · Vestal, NY · Locally Mated',
+    headline: 'A Queen With\n*Local Roots*',
+    cta: { label: 'Reserve a Queen', to: '/queens' },
+    image: {
+      type: 'static',
+      src: '/assets/queens/queen1.jpg',
+      alt: 'Mated Honeybee Queen',
+    },
+  },
 };
 
 // Change this one line to swap the homepage hero

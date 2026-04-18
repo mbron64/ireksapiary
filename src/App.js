@@ -15,6 +15,8 @@ const Subscribe = lazy(() => import('./components/Subscribe/Subscribe'));
 const HoneyTrio = lazy(() => import('./components/Bundle/HoneyTrio'));
 const ProductDetail = lazy(() => import('./components/Products/ProductDetail'));
 const Nucs = lazy(() => import('./components/Nucs/Nucs'));
+const BulkNucs = lazy(() => import('./components/Nucs/BulkNucs'));
+const Queens = lazy(() => import('./components/Queens/Queens'));
 const OrderConfirmation = lazy(() => import('./components/OrderConfirmation/OrderConfirmation'));
 const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 const PrivacyPolicy = lazy(() => import('./components/Legal/PrivacyPolicy'));
@@ -61,7 +63,9 @@ const router = createBrowserRouter([
       { path: '/subscribe', element: <Subscribe /> },
       { path: '/bundle/trio', element: <HoneyTrio /> },
       { path: '/products/:slug', element: <ProductDetail /> },
+      { path: '/nucs/bulk', element: <BulkNucs /> },
       { path: '/nucs', element: <Nucs /> },
+      { path: '/queens', element: <Queens /> },
       { path: '/order-confirmation', element: <OrderConfirmation /> },
       { path: '/privacy', element: <PrivacyPolicy /> },
       { path: '/terms', element: <Terms /> },

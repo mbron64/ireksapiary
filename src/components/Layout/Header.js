@@ -6,6 +6,7 @@ import { useCart } from '../../context/CartContext';
 
 const NAV_LINKS = [
   { to: '/nucs', label: 'Nucs' },
+  { to: '/queens', label: 'Queens' },
   { to: '/shop', label: 'Honey' },
   { to: '/subscribe', label: 'Subscribe' },
   { to: '/about', label: 'About' },
