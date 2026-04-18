@@ -173,7 +173,7 @@ export default function Nucs() {
         </StoryProse>
         <StoryProse>
           That lineage matters. These aren't package bees shipped in from the
-          South. They're a hybrid breed, selected to be both hardy and calm.
+          South. They're an Italian x Carniolan hybrid, selected to be both hardy and calm.
           They've overwintered here, adapted here, and thrived here. Through
           Upstate New York cold snaps, late frosts, and everything in between.
         </StoryProse>

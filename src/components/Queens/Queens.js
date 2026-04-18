@@ -24,7 +24,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'What genetics?',
-    a: 'Descendants of our 14-year lineage, open-mated to our drones. Same hybrid stock as our nucs.',
+    a: 'Italian x Carniolan hybrid, open-mated to our drones. Same stock as our nucs. Color varies between queens; some lean Italian (lighter), some lean Carniolan (darker).',
   },
   {
     q: 'Do you mark queens?',
@@ -60,7 +60,7 @@ export default function Queens() {
     <PageWrapper announcement="2026 Queens · Local Pickup · Reserve Yours" announcementLink="/queens">
       <SEO
         title="Mated Queen Bees for Sale 2026 | Binghamton & Southern Tier, NY"
-        description="Locally mated honeybee queens from Irek's Apiary in Vestal, NY. $55 per queen, pickup in the Southern Tier. 14 years of Upstate-adapted genetics."
+        description="Italian x Carniolan hybrid queens from Irek's Apiary in Vestal, NY. Locally raised and open-mated. $55 per queen, pickup in the Southern Tier."
         path="/queens"
         image="/assets/queens/queen1.jpg"
       >
@@ -68,7 +68,7 @@ export default function Queens() {
           "@context": "https://schema.org",
           "@type": "Product",
           "name": "Mated Honeybee Queen - 2026",
-          "description": "Locally mated honeybee queen from Irek's Apiary in Vestal, NY. Open-mated descendants of our 14-year lineage of Upstate-adapted hybrid stock. Available for pickup May through September 2026.",
+          "description": "Italian x Carniolan hybrid honeybee queen from Irek's Apiary in Vestal, NY. Locally raised and open-mated to our drones. Available for pickup May through September 2026.",
           "image": "https://ireksapiary.com/assets/queens/queen1.jpg",
           "brand": { "@type": "Brand", "name": "Irek's Apiary" },
           "offers": {
