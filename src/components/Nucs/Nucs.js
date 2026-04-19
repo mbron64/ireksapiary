@@ -12,7 +12,7 @@ const TOTAL_PER_NUC = NUC_PRICE + BOX_DEPOSIT;
 const FAQ_ITEMS = [
   {
     q: 'When do I pick up?',
-    a: 'Late April through May, depending on weather and when the colonies are ready. We schedule pickups at dawn or dusk so the foragers are back in the box. You\'ll get an email to coordinate your window.',
+    a: 'Around mid-May, depending on weather and when the colonies are ready. We schedule pickups at dawn or dusk so the foragers are back in the box. You\'ll get an email to coordinate your window.',
   },
   {
     q: 'Where?',
@@ -193,8 +193,8 @@ export default function Nucs() {
           <PickupCard>
             <PickupLabel>When</PickupLabel>
             <PickupText>
-              Late April through May. We schedule at dawn or dusk so the
-              foragers are home. You'll get an email once colonies are ready.
+              Around mid-May. We schedule at dawn or dusk so the foragers
+              are home. You'll get an email once colonies are ready.
             </PickupText>
           </PickupCard>
           <PickupCard>

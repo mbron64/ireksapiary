@@ -197,10 +197,6 @@ export default function Queens() {
 
       <IntroSection>
         <SectionTitle>Introducing Your Queen</SectionTitle>
-        <IntroProse>
-          Most queen losses happen at introduction, not handoff. Follow these
-          steps.
-        </IntroProse>
         <IntroList>
           <IntroItem>
             <IntroStep>01</IntroStep>
@@ -536,15 +532,6 @@ const IntroSection = styled.section`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: ${({ theme }) => theme.space['2xl']} ${({ theme }) => theme.space.md};
   }
-`;
-
-const IntroProse = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.md};
-  line-height: 1.7;
-  opacity: 0.85;
-  text-align: center;
-  max-width: 560px;
-  margin: 0 auto ${({ theme }) => theme.space['2xl']};
 `;
 
 const IntroList = styled.div`
